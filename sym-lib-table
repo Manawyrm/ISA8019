@@ -1,0 +1,3 @@
+(sym_lib_table
+  (lib (name RTL8019)(type Legacy)(uri ${KIPRJMOD}/RTL8019.lib)(options "")(descr ""))
+)

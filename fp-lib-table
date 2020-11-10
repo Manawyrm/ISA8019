@@ -1,0 +1,3 @@
+(fp_lib_table
+  (lib (name Package_QFP_Realtek)(type KiCad)(uri ${KIPRJMOD}/Package_QFP_Realtek.pretty)(options "")(descr ""))
+)
