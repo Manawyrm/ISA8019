@@ -1,6 +1,6 @@
 EESchema-DOCLIB  Version 2.0
 #
-$CMP RTL8019
+$CMP RTL8019AS
 F http://www.ethernut.de/pdf/8019asds.pdf
 $ENDCMP
 #

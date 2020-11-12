@@ -3,7 +3,7 @@ EELAYER 30 0
 EELAYER END
 $Descr A3 16535 11693
 encoding utf-8
-Sheet 1 1
+Sheet 1 2
 Title "ISA8019"
 Date "2020-11-12"
 Rev "A"
@@ -529,6 +529,12 @@ F 3 "" H 1600 6750 50  0001 C CNN
 $EndComp
 Wire Wire Line
 	1900 6750 1600 6750
+$Sheet
+S 13500 7150 1450 850 
+U 5FBCDFD3
+F0 "Sheet5FBCDFD2" 50
+F1 "RC2014-Ethernet.sch" 50
+$EndSheet
 $Comp
 L Ethernet_Transformer:13F-39MNL T?
 U 1 1 5FBE678D
