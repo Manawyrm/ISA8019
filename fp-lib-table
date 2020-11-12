@@ -1,3 +1,5 @@
 (fp_lib_table
   (lib (name Package_QFP_Realtek)(type KiCad)(uri ${KIPRJMOD}/Package_QFP_Realtek.pretty)(options "")(descr ""))
+  (lib (name Connector_Ethernet)(type KiCad)(uri ${KIPRJMOD}/Connector_Ethernet.pretty)(options "")(descr ""))
+  (lib (name ToolingHole)(type KiCad)(uri ${KIPRJMOD}/ToolingHole.pretty)(options "")(descr ""))
 )
