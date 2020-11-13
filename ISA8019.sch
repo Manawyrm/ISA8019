@@ -2248,4 +2248,44 @@ Wire Wire Line
 	9700 5150 9450 5150
 Wire Wire Line
 	1000 6350 1000 6400
+$Comp
+L Mechanical:MountingHole_Pad H4
+U 1 1 5FB5664A
+P 14350 9450
+F 0 "H4" H 14450 9499 50  0000 L CNN
+F 1 "MountingHole_Pad" H 14450 9408 50  0000 L CNN
+F 2 "MountingHole:MountingHole_3.2mm_M3_Pad_Via" H 14350 9450 50  0001 C CNN
+F 3 "~" H 14350 9450 50  0001 C CNN
+	1    14350 9450
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mechanical:MountingHole_Pad H3
+U 1 1 5FB57285
+P 14150 9450
+F 0 "H3" H 14250 9499 50  0000 L CNN
+F 1 "MountingHole_Pad" H 14250 9408 50  0000 L CNN
+F 2 "MountingHole:MountingHole_3.2mm_M3_Pad_Via" H 14150 9450 50  0001 C CNN
+F 3 "~" H 14150 9450 50  0001 C CNN
+	1    14150 9450
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR0128
+U 1 1 5FB8A9FE
+P 14250 9650
+F 0 "#PWR0128" H 14250 9400 50  0001 C CNN
+F 1 "GND" H 14255 9477 50  0000 C CNN
+F 2 "" H 14250 9650 50  0001 C CNN
+F 3 "" H 14250 9650 50  0001 C CNN
+	1    14250 9650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	14150 9550 14250 9550
+Wire Wire Line
+	14250 9550 14250 9650
+Connection ~ 14250 9550
+Wire Wire Line
+	14250 9550 14350 9550
 $EndSCHEMATC
