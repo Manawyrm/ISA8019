@@ -792,7 +792,7 @@ F 2 "Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm" H 8950 6150 50  0001 C CNN
 F 3 "~" H 8950 6150 50  0001 C CNN
 F 4 "C110936" V 8950 6150 50  0001 C CNN "LCSC"
 	1    8950 6150
-	0    1    1    0   
+	0    1    -1   0   
 $EndComp
 Wire Wire Line
 	8950 6000 8950 5900
@@ -1135,15 +1135,15 @@ Text Label 7600 2000 2    50   ~ 0
 Wire Wire Line
 	7350 2000 7600 2000
 $Comp
-L Connector_Generic:Conn_02x05_Counter_Clockwise J6
+L Connector_Generic:Conn_02x05_Odd_Even J6
 U 1 1 605952D4
 P 14850 2650
 F 0 "J6" H 14900 3067 50  0000 C CNN
-F 1 "BROM size and base address" H 14900 2976 50  0000 C CNN
+F 1 "BROM size and base address" H 14900 2300 50  0000 C CNN
 F 2 "Connector_PinHeader_2.54mm:PinHeader_2x05_P2.54mm_Vertical" H 14850 2650 50  0001 C CNN
 F 3 "~" H 14850 2650 50  0001 C CNN
 	1    14850 2650
-	1    0    0    -1  
+	1    0    0    1   
 $EndComp
 $Comp
 L Connector_Generic:Conn_02x01 J4
@@ -1157,7 +1157,7 @@ F 3 "~" H 14850 1750 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Connector_Generic:Conn_02x04_Counter_Clockwise J7
+L Connector_Generic:Conn_02x04_Odd_Even J7
 U 1 1 605EB97F
 P 14850 3300
 F 0 "J7" H 14900 3617 50  0000 C CNN
@@ -1168,7 +1168,7 @@ F 3 "~" H 14850 3300 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Connector_Generic:Conn_02x02_Counter_Clockwise J8
+L Connector_Generic:Conn_02x02_Odd_Even J8
 U 1 1 605ED14C
 P 14850 3850
 F 0 "J8" H 14900 4067 50  0000 C CNN
@@ -1179,7 +1179,7 @@ F 3 "~" H 14850 3850 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Connector_Generic:Conn_02x03_Counter_Clockwise J9
+L Connector_Generic:Conn_02x03_Odd_Even J9
 U 1 1 605EED03
 P 14850 4400
 F 0 "J9" H 14900 4717 50  0000 C CNN
@@ -2072,106 +2072,6 @@ Wire Wire Line
 	5550 8650 5800 8650
 Wire Wire Line
 	5550 8950 5800 8950
-$Comp
-L Connector_Generic:Conn_02x08_Top_Bottom J3
-U 1 1 61CBB166
-P 9150 4750
-F 0 "J3" H 9200 5267 50  0000 C CNN
-F 1 "AUI" H 9200 5176 50  0000 C CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_2x08_P2.54mm_Vertical" H 9150 4750 50  0001 C CNN
-F 3 "~" H 9150 4750 50  0001 C CNN
-	1    9150 4750
-	1    0    0    -1  
-$EndComp
-NoConn ~ 8950 5050
-NoConn ~ 9450 5050
-$Comp
-L power:GND #PWR0123
-U 1 1 61DC086B
-P 8850 5250
-F 0 "#PWR0123" H 8850 5000 50  0001 C CNN
-F 1 "GND" H 8855 5077 50  0000 C CNN
-F 2 "" H 8850 5250 50  0001 C CNN
-F 3 "" H 8850 5250 50  0001 C CNN
-	1    8850 5250
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	8950 4450 8850 4450
-Wire Wire Line
-	8850 4450 8850 4750
-Wire Wire Line
-	8950 4750 8850 4750
-Connection ~ 8850 4750
-Wire Wire Line
-	8850 4750 8850 4950
-Wire Wire Line
-	8950 4950 8850 4950
-Connection ~ 8850 4950
-Wire Wire Line
-	8850 4950 8850 5150
-Wire Wire Line
-	8950 5150 8850 5150
-Connection ~ 8850 5150
-Wire Wire Line
-	8850 5150 8850 5250
-Wire Wire Line
-	9450 4650 9550 4650
-Wire Wire Line
-	9550 4650 9550 4950
-Wire Wire Line
-	9550 4950 9450 4950
-Wire Wire Line
-	9550 4950 9550 5250
-Connection ~ 9550 4950
-$Comp
-L power:GND #PWR0124
-U 1 1 61EFBDD1
-P 9550 5250
-F 0 "#PWR0124" H 9550 5000 50  0001 C CNN
-F 1 "GND" H 9555 5077 50  0000 C CNN
-F 2 "" H 9550 5250 50  0001 C CNN
-F 3 "" H 9550 5250 50  0001 C CNN
-	1    9550 5250
-	1    0    0    -1  
-$EndComp
-Text Label 8650 4550 0    50   ~ 0
-CD+
-Wire Wire Line
-	8650 4550 8950 4550
-Text Label 8650 4650 0    50   ~ 0
-TX+
-Text Label 8650 4850 0    50   ~ 0
-RX+
-Text Label 9700 4450 2    50   ~ 0
-CD-
-Text Label 9700 4550 2    50   ~ 0
-TX-
-Text Label 9700 4750 2    50   ~ 0
-RX-
-$Comp
-L power:+12V #PWR0125
-U 1 1 61F3055B
-P 9900 4350
-F 0 "#PWR0125" H 9900 4200 50  0001 C CNN
-F 1 "+12V" H 9915 4523 50  0000 C CNN
-F 2 "" H 9900 4350 50  0001 C CNN
-F 3 "" H 9900 4350 50  0001 C CNN
-	1    9900 4350
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	9450 4850 9900 4850
-Wire Wire Line
-	9900 4350 9900 4850
-Wire Wire Line
-	9700 4750 9450 4750
-Wire Wire Line
-	9450 4450 9700 4450
-Wire Wire Line
-	8650 4650 8950 4650
-Wire Wire Line
-	8650 4850 8950 4850
 Text Label 7600 4600 2    50   ~ 0
 CD+
 Text Label 7600 4700 2    50   ~ 0
@@ -2236,16 +2136,10 @@ Wire Wire Line
 	1750 2150 1750 2300
 Wire Wire Line
 	1750 2300 2300 2300
-Wire Wire Line
-	9450 4550 9700 4550
 Text Label 7600 4400 2    50   ~ 0
 AUI
 Wire Wire Line
 	7350 4400 7700 4400
-Text Label 9700 5150 2    50   ~ 0
-AUI
-Wire Wire Line
-	9700 5150 9450 5150
 Wire Wire Line
 	1000 6350 1000 6400
 $Comp
@@ -2288,4 +2182,42 @@ Wire Wire Line
 Connection ~ 14250 9550
 Wire Wire Line
 	14250 9550 14350 9550
+$Comp
+L power:Earth #PWR0129
+U 1 1 5FC46E93
+P 12700 9500
+F 0 "#PWR0129" H 12700 9250 50  0001 C CNN
+F 1 "Earth" H 12700 9350 50  0001 C CNN
+F 2 "" H 12700 9500 50  0001 C CNN
+F 3 "~" H 12700 9500 50  0001 C CNN
+	1    12700 9500
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:Ferrite_Bead FB1
+U 1 1 5FC47DE8
+P 12550 9450
+F 0 "FB1" V 12276 9450 50  0000 C CNN
+F 1 "Ferrite_Bead" V 12367 9450 50  0000 C CNN
+F 2 "Inductor_SMD:L_0805_2012Metric" V 12480 9450 50  0001 C CNN
+F 3 "~" H 12550 9450 50  0001 C CNN
+F 4 "C1017" V 12550 9450 50  0001 C CNN "LCSC"
+	1    12550 9450
+	0    1    1    0   
+$EndComp
+$Comp
+L power:GND #PWR0130
+U 1 1 5FC496B0
+P 12400 9500
+F 0 "#PWR0130" H 12400 9250 50  0001 C CNN
+F 1 "GND" H 12405 9327 50  0000 C CNN
+F 2 "" H 12400 9500 50  0001 C CNN
+F 3 "" H 12400 9500 50  0001 C CNN
+	1    12400 9500
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	12400 9450 12400 9500
+Wire Wire Line
+	12700 9450 12700 9500
 $EndSCHEMATC
