@@ -2,4 +2,5 @@
   (lib (name Package_QFP_Realtek)(type KiCad)(uri ${KIPRJMOD}/Package_QFP_Realtek.pretty)(options "")(descr ""))
   (lib (name Connector_Ethernet)(type KiCad)(uri ${KIPRJMOD}/Connector_Ethernet.pretty)(options "")(descr ""))
   (lib (name ToolingHole)(type KiCad)(uri ${KIPRJMOD}/ToolingHole.pretty)(options "")(descr ""))
+  (lib (name Bus_AT_without_Silkscreen)(type KiCad)(uri ${KIPRJMOD}/Bus_AT_without_Silkscreen.pretty)(options "")(descr ""))
 )

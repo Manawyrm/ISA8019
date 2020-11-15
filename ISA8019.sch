@@ -19,7 +19,7 @@ U 1 1 5FAD818A
 P 3000 4000
 F 0 "J1" H 3000 6767 50  0000 C CNN
 F 1 "Bus_ISA_16bit" H 3000 6676 50  0000 C CNN
-F 2 "Connector_PCBEdge:BUS_AT" H 3000 4050 50  0001 C CNN
+F 2 "Bus_AT_without_Silkscreen:BUS_AT_WO_SILKSCREEN" H 3000 4050 50  0001 C CNN
 F 3 "https://en.wikipedia.org/wiki/Industry_Standard_Architecture" H 3000 4050 50  0001 C CNN
 	1    3000 4000
 	1    0    0    -1  
@@ -2220,4 +2220,15 @@ Wire Wire Line
 	12400 9450 12400 9500
 Wire Wire Line
 	12700 9450 12700 9500
+$Comp
+L Mechanical:MountingHole H5
+U 1 1 5FCDE6CF
+P 15250 9150
+F 0 "H5" H 15350 9196 50  0000 L CNN
+F 1 "OSHW Logo" H 15350 9105 50  0000 L CNN
+F 2 "Symbol:OSHW-Logo_11.4x12mm_Copper" H 15250 9150 50  0001 C CNN
+F 3 "~" H 15250 9150 50  0001 C CNN
+	1    15250 9150
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC
