@@ -1138,7 +1138,7 @@ $Comp
 L Connector_Generic:Conn_02x05_Odd_Even J6
 U 1 1 605952D4
 P 14850 2650
-F 0 "J6" H 14900 3067 50  0000 C CNN
+F 0 "J6" H 14900 2950 50  0000 C CNN
 F 1 "BROM size and base address" H 14900 2300 50  0000 C CNN
 F 2 "Connector_PinHeader_2.54mm:PinHeader_2x05_P2.54mm_Vertical" H 14850 2650 50  0001 C CNN
 F 3 "~" H 14850 2650 50  0001 C CNN
@@ -1159,35 +1159,35 @@ $EndComp
 $Comp
 L Connector_Generic:Conn_02x04_Odd_Even J7
 U 1 1 605EB97F
-P 14850 3300
-F 0 "J7" H 14900 3617 50  0000 C CNN
-F 1 "I/O base address" H 14900 3526 50  0000 C CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_2x04_P2.54mm_Vertical" H 14850 3300 50  0001 C CNN
-F 3 "~" H 14850 3300 50  0001 C CNN
-	1    14850 3300
-	1    0    0    -1  
+P 14850 3400
+F 0 "J7" H 14900 3600 50  0000 C CNN
+F 1 "I/O base address" H 14900 3050 50  0000 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_2x04_P2.54mm_Vertical" H 14850 3400 50  0001 C CNN
+F 3 "~" H 14850 3400 50  0001 C CNN
+	1    14850 3400
+	1    0    0    1   
 $EndComp
 $Comp
 L Connector_Generic:Conn_02x02_Odd_Even J8
 U 1 1 605ED14C
-P 14850 3850
-F 0 "J8" H 14900 4067 50  0000 C CNN
-F 1 "Medium type" H 14900 3976 50  0000 C CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_2x02_P2.54mm_Vertical" H 14850 3850 50  0001 C CNN
-F 3 "~" H 14850 3850 50  0001 C CNN
-	1    14850 3850
-	1    0    0    -1  
+P 14850 3950
+F 0 "J8" H 14900 4050 50  0000 C CNN
+F 1 "Medium type" H 14900 3750 50  0000 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_2x02_P2.54mm_Vertical" H 14850 3950 50  0001 C CNN
+F 3 "~" H 14850 3950 50  0001 C CNN
+	1    14850 3950
+	1    0    0    1   
 $EndComp
 $Comp
 L Connector_Generic:Conn_02x03_Odd_Even J9
 U 1 1 605EED03
 P 14850 4400
-F 0 "J9" H 14900 4717 50  0000 C CNN
-F 1 "IRQ select" H 14900 4626 50  0000 C CNN
+F 0 "J9" H 14900 4600 50  0000 C CNN
+F 1 "IRQ select" H 14900 4200 50  0000 C CNN
 F 2 "Connector_PinHeader_2.54mm:PinHeader_2x03_P2.54mm_Vertical" H 14850 4400 50  0001 C CNN
 F 3 "~" H 14850 4400 50  0001 C CNN
 	1    14850 4400
-	1    0    0    -1  
+	1    0    0    1   
 $EndComp
 $Comp
 L Connector_Generic:Conn_02x01 J5
