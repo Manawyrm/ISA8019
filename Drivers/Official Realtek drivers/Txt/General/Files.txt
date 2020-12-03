@@ -1,0 +1,242 @@
+   Files on Configuration Disk
+
+
+   Root directory
+   --------------
+      VERSION.DOC        Descript some information for this version of the
+                         RTL8019 driver disk;
+      HELP8019.EXE       Readme Viewer;
+      FILEPATH.LST       LST file for Readme Viewer;
+      MAINMENU.TXT       TXT file for HELP8019 Mainmenu Title;
+      RSET8019.EXE       RSET8019 program set up the adapter's hardware
+                         configuration and  running diagnostics;
+      OEMSETUP.INF       The setup file for NT3.5, NT3.51 & NT4.0;
+      NETRTN.INF         The setup file for Win95 & OSR2;
+
+
+   \TXT\GENERAL
+   -------------
+      DIRS.TXT           All subdirectory contents about this RTL8019
+                         driver diskette;
+      FILES.TXT          All files abstract in this RTL8019 driver diskette;
+
+
+   \TXT\IBM
+   ---------
+      Text files about IBM NOS Installation Notes :
+      LANSVR20.TXT
+      LANSVR40.TXT
+
+
+   \TXT\MS
+   -------
+      Text files about Microsoft NOS Installation Notes :
+      MSCLIENT.TXT
+      MSLANMAN.TXT
+      MSWFW310.TXT
+      MSWFW311.TXT
+      MSNT.TXT
+      MSNT31.TXT
+      MSWIN95.TXT
+
+
+   \TXT\NETWARE
+   -------------
+      Text files about Novell NOS Installation Notes :
+      NWODIOS2.TXT
+      NWODIDOS.TXT
+      NW311.TXT
+      NW312.TXT
+      NW41.TXT
+      NW411.TXT
+      CLIENT32.TXT
+
+
+   \TXT\OTHERS
+   -----------
+      Text files about Other NOS Installation Notes :
+      LANTAS40.TXT
+      LANTAS50.TXT
+      LANTAS60.TXT
+      PACKET.TXT
+
+
+   \TXT\UNIX
+   ----------
+      Text files about Information on UNIX drivers :
+      SCO4.TXT
+      SCO5.TXT
+      LINUX.TXT          Descript how to install ne2000 
+                         compatible driver         
+
+   \CLIENT32
+   ----------
+      PNPSRV.LAN         ODI 32-bit driver;
+      ODIRTL.INF
+
+
+   \LANTAS4
+   --------
+      PNPLAN.EXE         LAN driver for LANtastic 4.0;
+
+
+   \LANTAS5
+   --------
+      PNPLAN5.EXE        LAN driver for LANtastic 5.0;
+
+
+   \MSCLIENT
+   ---------
+      PNPND.DOS          NDIS 2.0 driver;
+      OEMSETUP.INF       Configuration file;
+
+
+   \MSLANMAN.DOS\DRIVERS\ETHERNET\RTL8019
+   ---------------------------------------
+      PNPND.DOS          DOS NDIS 2.01 driver;
+      PROTOCOL.INI       Protocol.ini stub for LAN Manager install;
+
+
+   \MSLANMAN.DOS\DRIVERS\NIF
+   -------------------------
+      RTL8019.NIF        Standard NIF file for DOS;
+
+
+   \MSLANMAN.OS2\DRIVERS\ETHERNET\RTL8019
+   ---------------------------------------
+      PNPND.OS2          OS/2 NDIS 2.0 driver;
+      PROTOCOL.INI       Protocol.ini stub for LAN Manager install;
+
+
+   \MSLANMAN.OS2\DRIVERS\NIF
+   --------------------------
+      RTL8019.NIF        Standard NIF file for OS/2;
+
+
+   \NDIS\DOS\LAN_S23
+   -----------------
+      PNPND.DOS          DOS NDIS 2.0 driver;
+      RTL8019.NIF        Extended NIF file for IBM OS/2;
+
+
+   \NDIS\DOS\LAN_S4
+   ----------------
+      PNPND.DOS          DOS NDIS 2.0 driver;
+      OEMSETUP.INF       Extended NIF file for DOS LAN Requester;
+
+
+   \NDIS\OS2\PNPND.OS2
+   -------------------
+      PNPND.OS2          OS2 NDIS 2.0 driver;
+      RTL8019.NIF        Extended NIF file for IBM OS/2;
+
+
+   \NWCLIENT\DOS
+   -------------
+      PNPODI.COM         ODI driver for DOS;
+      NET.CFG            Sample Net.cfg for ODI;
+      PNPODI.INS
+
+
+   \NWCLIENT\OS2\
+   ---------------
+      PNPOS2.SYS         ODI driver for OS/2;
+
+
+   \NWSERVER\311
+   -------------
+      PNPSRV.LAN         3.11 Server driver;
+      MSM31X.NLM
+      ETHERTSM.NLM
+      LSLENH.NLM
+      MONITOR.NLM
+      PATCHMAN.NLM
+
+
+   \NWSERVER\312
+   -------------
+      PNPSRV.LAN         3.12 Server driver;
+      PNPSRV.LDI
+      MSM31X.NLM
+      ETHERTSM.NLM
+      NBI31X.NLM
+
+
+   \NWSERVER\41
+   ------------
+      PNPSRV.LAN         4.1 Server driver;
+      PNPSRV.LDI
+      ETHERTSM.NLM
+      MSM.NLM
+      NBI.NLM
+
+
+   \NWSERVER\411
+   -------------
+      PNPSRV.LAN         4.1 Server driver;
+      PNPSRV.LDI
+
+   \PKTDRV
+   -------
+      PNPPD.COM          Packet Driver;
+
+
+   \SCO\4.X
+   ---------
+      DRIVER.O           SCO UNIX driver;
+      SETUP
+      INFO
+      INIT
+      MASTER
+      NODE
+      RECONF
+      REMOVE
+      SPACE.C
+      SYSTEM
+
+
+   \SCO\5.X
+   ---------
+      DRIVER.O           SCO UNIX driver;
+      SETUP
+      MASTER
+      SYSTEM
+      NODE
+      SPACE.C
+      SPACE.H
+      LKCFG
+      AOF/R2E
+
+
+   \WFW31
+   ------
+      PNPND.DOS          NDIS 2.0 driver for WfW 3.10;
+      OEMSETUP.INF       Configuration file for WfW 3.11 install;
+
+
+   \WFW311
+   -------
+      PNPND.386          NDIS 3.0 driver for WfW 3.11;
+      PNPODI.COM         WFW311 supports to setup ODI driver;
+      PNPND.DOS          WFW311 supports to setup NDIS 2.0 driver;
+      OEMSETUP.INF       Configuration file for WfW 3.11 install;
+
+
+   \WIN95
+   ------
+      PNPNT.SYS          NDIS 3.0 mini-port driver for Windows NT ,
+                         Windows 95;
+
+
+   \WINNT31
+   --------
+      PNPNT.SYS          NDIS 3.0 driver for Windows NT;
+      NDIS.SYS           Replace original NDIS in the system with this file;
+      OEMSETUP.INF       Configuration file for Windows install;
+      README.TXT
+
+
+   \WINNT
+   ------
+      PNPNT.SYS          NDIS 3.0 driver for Windows NT;
+

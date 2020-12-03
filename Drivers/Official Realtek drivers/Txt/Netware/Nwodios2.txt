@@ -1,0 +1,57 @@
+   Workstation for OS2 ODI Client
+
+   Introduction:
+   -------------
+   This document describes the procedure to setup the NetWare v3.X , v4.X
+   OS2 workstation driver for REALTEK RTL8019 Plug&Play ethernet adapter.
+
+   Location of Driver:     \NWCLIENT\OS2\PNPOS2.SYS
+
+   Sample Configuration Files:
+   ---------------------------
+      CONFIG.SYS :
+         DEVICE=C:\NETWARE\LSL.SYS          ; OS/2 Requester supported
+         DEVICE=C:\NETWARE\DDAEMON.SYS      ; OS/2 Requester supported
+         DEVICE=C:\NETWARE\PNPOS2.SYS       ; REALTEK supported
+         DEVICE=C:\NETWARE\IPX.SYS          ; OS/2 Requester supported
+
+      NET.CFG :
+         LINK DRIVER PNPOS2
+              FRAME ETHERNET_802.3
+              FRAME ETHERNET_802.2
+
+
+   Installation Procedure :
+   ----------------------
+      Before you start with the installation procedure, make sure that the
+      adapter is properly  installed and configured.  Similarly, Make sure
+      that your NetWare  Requester  for OS/2 is properly installed.
+
+      Please refer to "Novell NetWare Requester for OS/2" documentation for
+      a detailed  Requester and Utilities installation guide.
+
+      1. Copy the  PNPOS2.SYS  file into the NETWARE subdirectory of your
+         hard disk from the Realtek Driver Diskette A:\NWCLIENT\OS2.
+
+      2. Add or replace the PNPOS2.SYS  in the CONFIG.SYS file.
+
+      3. Edit the NET.CFG file that you copied over. Edit the file per your
+         requirements (see examples above).  If there are two frame types
+         listed, whichever frame type is listed first, that is the one that
+         the driver will load.  See above for examples.
+
+      4. Reboot your system to get service of network.
+
+   NOTE:
+   -----
+   You can bind several frame types to the IPX protocol to support
+   various  configurations. Include this in the Link Driver PNPOS2
+   section of the NET.CFG file. A sample is shown below:
+
+           Link Driver PNPOS2
+
+           frame Ethernet_802.3
+           frame Ethernet_802.2
+           frame Ethernet_II
+           frame Ethernet_snap
+

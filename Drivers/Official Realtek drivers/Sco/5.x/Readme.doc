@@ -1,0 +1,58 @@
+
+                                                                2/1/1996
+                      SCO UNIX RTL 8019  MDI Driver
+         ==================================================
+
+
+The following files will be used in this installation:
+
+Files          Contents
+-----------    -----------------------------------------
+Driver.o       RTL 8019 MDI Driver Program
+setup          Transfer dos format to unix format setup program
+Master         Used by netconfig
+System         Used by netconfig
+Node           Used by netconfig
+Space.c        Used by netconfig
+space.h        Used by netconfig
+lkcfg          Used by netconfig
+AOF/r2e        Used by netconfig
+
+
+
+1.  Installation Diskette in DOS format.
+    Put RTL SCO UNIX Driver diskette to floppy A: and use doscp
+    command to copy RTL SCO UNIX PCI Driver into UNIX's directories.
+
+       # cd /
+       # doscp A:setup  /setup
+       # chmod +x /setup
+       # ./setup
+
+
+2.     Use netconfig utility
+
+       Avaiable options:
+
+       # netconfig
+
+3.  To add adapters, select "Add New Lan Adapter" from "Hardware".
+
+4.  Add Protocol to select SCO TCP/IP. 
+       
+5.  Enter the internet Address of this interface         n.n.n.n
+
+6.  Enter the netmask for this interface                 (default 255.255.255.0)
+
+7.  Enter the boardcast address for this interface       default: n.n.n.n
+
+8.  Do you want to relink to kernel now ?               y
+
+9.  Do you want this kernel to boot by default (y/n)    y
+
+10. Do you want the kernel environment rebuilt (y/n)    y
+
+11. Reboot unix
+
+        # shutdown -y -g0
+

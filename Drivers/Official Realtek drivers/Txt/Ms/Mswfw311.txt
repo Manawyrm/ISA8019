@@ -1,0 +1,91 @@
+   Windows for Workgroups v3.11
+
+   Introduction:
+   -------------
+   This document describes the procedure to install  Microsoft Windows
+   for Workgroups v3.11 driver for REALTEK RTL8019 Plug&Play  ethernet
+   adapter.
+
+   LOCATION OF DRIVER:     \WFW311\PNPND.386
+
+
+   Setup Procedure:
+   ----------------
+      After you run into Windows for Workgroup 3.11:
+
+      1. Select the "Network Setup" icon in the Network Group.
+
+      2. Click on the "Drivers..." button.
+
+      3. If you are replacing a previous LAN adapter select the Remove
+         button to delete that adapter
+
+      4. Click on the "Add Adapter" button.
+
+      5. Choose Unlisted or Updated Network Adapter.
+
+      6. Insert the adapter driver disk in drive "A" and specify the path
+         A:\WFW311 for the location of the driver.
+
+      7. Close, and when prompted, restart your computer so that changes
+         take affect.
+
+
+   NOTES:
+   ------
+      1. Parameters for the PROTOCOL.INI file:
+
+         AdapterID : This  keyword is provided  by PNPND, and is  required
+                     when  more  than  one  RTL8019  adapters exist on one
+                     system.
+
+      2. Installing Multiple LAN Adapters:
+         There are two different method to complete:
+         (a) Under  DOS  mode, you can modify the AdapterID in file
+             C:\WFW311\PROTOCOL.INI by yourself.
+         (b) Or you can enter Windows for WorkGroup and follow  above
+             setup procedurc step 2,then click on "Setup.." button, select
+             "Advanced...",fill AdapterID in Value item. Last step to
+             select OK and close NETWORK SETUP.
+
+      3. Sample PROTOCOL.INI:
+         Windows for Workgroups creates the PROTOCOL.INI for you.  This is
+         provided for reference.  This is a sample with Microsoft Netbeui and
+         IPX/SPX Compatible Transport with Netbios.
+
+         [network.setup]
+         version=0x3110
+         netcard=RTL8019,1,RTL8019,3
+         transport=ms$nwlinknb,NWLINK
+         transport=ms$ndishlp,MS$NDISHLP
+         transport=ms$netbeui,NETBEUI
+         lana0=RTL8019,1,ms$netbeui
+         lana1=RTL8019,1,ms$nwlinknb
+         lana2=RTL8019,1,ms$ndishlp
+
+
+         [protman]
+         DriverName=PROTMAN$
+         PRIORITY=MS$NDISHLP
+
+         [RTL8019]
+         DriverName=PNPND$
+         AdapterID=@000000000123
+
+         [PNPND]
+         Adapters=RTL8019
+
+         [NWLINK]
+         BINDINGS=RTL8019
+
+         [MS$NDISHLP]
+         DriverName=ndishlp$
+         BINDINGS=RTL8019
+
+         [NETBEUI]
+         DriverName=netbeui$
+         SESSIONS=10
+         NCBS=12
+         BINDINGS=RTL8019
+         LANABASE=0
+

@@ -1,0 +1,83 @@
+   Server Driver for NetWare 3.11
+
+   Introduction:
+   -------------
+   This document describes the procedure to install the NetWare v3.11
+   server driver for REALTEK RTL8019 Plug&Play ethernet adapter.
+
+   Location of Driver:     \NWSERVER\311\PNPSRV.LAN
+
+
+   Installation Procedure:
+   -----------------------
+      Before you start with the installation  process,  make sure that
+      the Novell NetWare 386 v3.11 server is properly installed.
+      Similarly, your adapter should also be properly installed in your
+      workstation.
+
+      1. If you can log into the server as a supervisor , copy PNPSRV.LAN
+         relative files from the Realtek Driver Diskette subdirectory
+         A:\NWSERVER\311 into the NetWare 386 subdirectory SYSTEM of your
+         server. (If some files exists, rename the existing files in the
+         SYSTEM subdirectory).
+
+      2. Run  SERVER.EXE  from  your  server.  You will see a series of
+         NetWare messages on screen.
+
+      3. When the NetWare 386 prompt appears (indicated by a colon),load
+         your server driver. Simply type:
+
+         : LOAD LSLENH <Enter>
+         : LOAD PNPSRV <Enter>
+
+         or, you can directly load file from Realtek RTL8019 driver disk :
+
+         : LOAD A:\NWSERVER\311\LSLENH <Enter>
+         : LOAD A:\NWSERVER\311\PNPSRV <Enter>
+
+      4. Bind IPX to the adapter driver. At the NetWare server prompt
+         ,type:
+
+         :BIND IPX TO PNPSRV <Enter>
+
+      5. After pressing <Enter> the computer prompts you for the Network
+         Number. For details on how to assign this number,please consult
+         your NetWare 386  Installation Manual.
+
+      6. Add the load and bind statements you require to the server's
+         AUTOEXEC.NCF file so that the LAN driver will load automatically
+         each time the server starts up.
+
+
+   NOTES:
+   ------
+      1. Installing Multiple LAN Adapters:
+         The keyword "EtherID" is the ethernet address of a adapter. This
+         keyword is provided for multiple LAN adapters in a single server
+         by the driver PNPSRV.LAN.  So, add EtherID in LOAD commands. For
+         example:
+
+         LOAD PNPSRV EtherID=012345678901 FRAME=Ethernet_802.2 NAME=LAN_A
+         BIND IPX TO LAN_A NET=222
+         LOAD PNPSRV EtherID=012345678902 FRAME=Ethernet_802.2 NAME=LAN_B
+         BIND IPX TO LAN_B NET=333
+
+      2. Installing One LAN Adapter with Multiple Frame Types:
+         When  binding multiple frame types to one adapter, enter a LOAD
+         and BIND statement for each frame type. Each LOAD statement will
+         use a different network number is required on the bind statement.
+         You need  to supply  a name on each load line in order to avoid
+         being  prompted  for which  board to bind IPX to. If you do not
+         have the name option in the AUTOEXEC.NCF , it will not  execute
+         completely without user intervention.  Example:
+
+           LOAD PNPSRV FRAME=ETHERNET_802.3 NAME=LAN8023
+           BIND IPX TO LAN8023 NET=77777
+           LOAD PNPSRV FRAME=ETHERNET_802.2 NAME=LAN8022
+           BIND IPX TO LAN8022 NET=88888
+
+
+   If problems occur during the binding process, your  screen will prompt
+   you with error  messages.  Please refer to your NetWare 386 manual for
+   details on these messages.
+

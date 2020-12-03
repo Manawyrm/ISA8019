@@ -1,0 +1,18 @@
+#
+#       @(#) r0e 7.1 94/12/22 SCOINC
+#
+#	Copyright (C) The Santa Cruz Operation, 1993-1994
+#	This Module contains Proprietary Information of
+#	The Santa Cruz Operation, and should be treated as Confidential.
+
+
+ADAPTER:
+	DESCRIPTION="RTL 8019 Ethernet Adapter Driver"
+	BUS=
+	MEDIA_TYPE=ethernet
+	MAX_BD=3
+	KEY=BASE_IO
+	REQUIRED=IRQ
+	ADVANCED=
+	SPEED=slow
+	NET_BOOT=dynamic

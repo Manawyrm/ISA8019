@@ -1,0 +1,7 @@
+Model           = Realtek 8019 (RealPNP)
+Path            = ETHERNET\RTL8019
+DeviceDriver    = PNPND.OS2
+DeviceName      = PNPND
+Type            = NDIS
+XPorts          = NETBEUI
+

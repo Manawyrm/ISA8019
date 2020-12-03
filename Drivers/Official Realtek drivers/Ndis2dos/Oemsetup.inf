@@ -1,0 +1,21 @@
+
+;RTL8019's OEMSETUP.INF File:
+
+[netcard]
+RTL8019="RealTek 8019 (REALPNP)",000,ndis,ethernet,real,rtl8019,rtl8019_nif
+
+[rtl8019]
+devdir=?:pnpnd.dos
+device=pnpnd.dos,@devdir\pnpnd.dos
+
+[rtl8019_nif]
+drivername=PNPND$
+param=NETADDRESS,"Network Address",chars,13,"@000000000000",0x02
+param=ADAPTERID,"Adpater's ID(required if multi-8019 used).",chars,13,@000000000000,0x02
+
+
+
+
+
+
+

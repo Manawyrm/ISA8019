@@ -1,0 +1,5 @@
+NAME="r0e0"
+DESCRIPTION="RTL PnP Ethernet Adapter Driver, board 0"
+UP="lli"
+DOWN=""
+

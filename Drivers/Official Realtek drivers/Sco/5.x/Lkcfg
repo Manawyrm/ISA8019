@@ -1,0 +1,64 @@
+:
+#
+#       @(#) lkcfg 7.1 94/11/27 SCOINC
+#
+#	Copyright (C) The Santa Cruz Operation, 1993-1994
+#	This Module contains Proprietary Information of
+#	The Santa Cruz Operation, and should be treated as Confidential.
+
+#
+# 	r0e MDI driver Link Kit configuration script
+#
+
+[ "$#" != "5" ] && {
+	echo "Usage:\n\t$0 <-ird> INIT_DB_RECORD MDI_driver Board_number"
+	exit $FAIL
+}
+
+LLI_ROOT=`llipathmap`
+. $LLI_ROOT/lib/libcfg.sh
+PATH=$PATH:$LLI_ROOT/bin
+option=$1
+INITDBR=$2
+AOFFILE=$3
+drv=$4
+bd=$5
+SYSTEM_FILE=$MKMOKROOT/etc/conf/sdevice.d/$drv
+MASTER_FILE=$MKMOKROOT/etc/conf/cf.d/mdevice
+DRIVER_DIR=$MKMOKROOT/etc/conf/pack.d/$drv
+
+# de-configure driver
+[ "$option" = "-d" ] && {
+	# removes the driver from the system
+	[ -f $SYSTEM_FILE ] && {
+		set_system_info $SYSTEM_FILE $bd "N" 0 0 0 0 0 0 0
+
+		awk '{ if ( $2 == "Y" ) exit 1 }' $SYSTEM_FILE && idinstall -d $drv
+	}
+	exit $OK
+}
+
+[ -f "$INITDBR" ] || {
+	echo "No INIT DB RECORD, \"$INITBDR\" found"
+	exit $FAIL
+}
+
+cd $LLI_ROOT/ID/$drv
+for i in System Master Node Driver.o Space.c space.h r2e.h
+do
+	[ -f "$i" ] || {
+		echo "$drv: File, \"$LLI_ROOT/ID/$drv/$i\" not found"
+		exit $FAIL
+	}
+done
+
+
+# check to see if the driver is in the link-kit
+[ -f $SYSTEM_FILE ] || {
+	idinstall -a -e -k $drv
+	idinstall -u -k -H $drv
+}
+
+set_system_info $SYSTEM_FILE $bd "Y" 0 0 0 0 0 0 0
+
+exit $OK

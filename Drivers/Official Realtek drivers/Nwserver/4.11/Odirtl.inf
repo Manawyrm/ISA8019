@@ -1,0 +1,459 @@
+; ODIRTL.INF
+;
+; Realtek Network Interface Cards.
+;
+; VeRsIoN=1.00 Novell Windows 95 INF file: Realtek Ethernet Card.
+; CoPyRiGhT=(c) Copyright 1996, by Realtek, Inc. All rights reserved.
+
+[version]
+InfVersion=00.01.00
+signature=$CHICAGO$
+Class=Net
+provider=%V_N%
+
+;****************************************************************************
+;       Manufacturer Section
+;****************************************************************************
+[Manufacturer]
+%V_Realtek%=Realtek
+
+;****************************************************************************
+;       Manufacturer Name Section
+;****************************************************************************
+[Realtek]
+%*rtl8019.DeviceDesc%=*rtl8019.Ndi, *rtl8019    ; Realtek RTL8019
+%*rtl8029.DeviceDesc%=*rtl8029.Ndi,        PCI\VEN_10EC&DEV_8029 ; RTL8029
+%*rtl8129.DeviceDesc%=*rtl8129.Ndi,        PCI\VEN_10EC&DEV_8129 ; RTL8129
+
+;****************************************************************************
+;       INF INSTALL SECTION
+;****************************************************************************
+;****************************************************************************
+;    * Realtek RTL8019, RTL8029, RTL8129 (C, DOS ODI)
+;****************************************************************************
+[*rtl8019.Ndi]
+AddReg=*rtl8019.Ndi.reg, pnp8019.Ndi.reg, ODI.Common.CFG.reg
+
+[*rtl8029.Ndi]
+AddReg=*rtl8029.Ndi.reg, pci8029.Ndi.reg, ODI.Common.CFG.reg
+
+[*rtl8129.Ndi]
+AddReg=*rtl8129.Ndi.reg, rtf8129.Ndi.reg, ODI.Common.CFG.reg
+
+;****************************************************************************
+;       .REG (Device IDs)
+;****************************************************************************
+[*rtl8019.Ndi.reg]
+HKR,Ndi,DeviceID,,"*rtl8019"
+
+[*rtl8029.Ndi.reg]
+HKR,Ndi,DeviceID,,"PCI\VEN_10EC&DEV_8029"
+
+[*rtl8129.Ndi.reg]
+HKR,Ndi,DeviceID,,"PCI\VEN_10EC&DEV_8129"
+
+;****************************************************************************
+;       .REG Common Settings for all REALTEK drivers
+;****************************************************************************
+[pnp8019.Ndi.reg]
+; key,subkey,valuname,type,value
+HKR,,DevLoader,,*odiload
+HKR,,EnumPropPages,,"netdi.dll,EnumPropPages"
+
+; Ndi section
+HKR,Ndi,NdiInstaller,,"odipage.dll,odiNdiproc"
+
+; Interfaces
+HKR,Ndi\Interfaces,DefUpper,,"odinsup,NovellODI32"
+HKR,Ndi\Interfaces,UpperRange,,"odinsup,NovellODI32"
+HKR,Ndi\Interfaces,DefLower,,"ethernet"
+HKR,Ndi\Interfaces,LowerRange,,"ethernet"
+
+; Install section
+HKR,Ndi\Install,"16 Bit",,"pnp8019.ODI16.Install"
+HKR,Ndi\Install,"32 Bit",,"pnp8019.ODI32.Install"
+
+; Remove section
+HKR,Ndi\Remove,"16 Bit",,"pnp8019.ODI16.Remove"
+
+; ODI 16 Bit info
+HKR,"ODI\16 Bit",ModulePath,,"%24%%DRIVER_32_PATH%"
+HKR,"ODI\16 Bit",Modules,,"LSLC32.NLM,PC32MLID.LAN"
+HKR,"ODI\16 Bit",DriverPath,,"%24%%DRIVER_16_PATH%"
+HKR,"ODI\16 Bit",NetcfgPath,,"%24%%DRIVER_16_PATH%"
+HKR,"ODI\16 Bit",NetcfgFileName,,"Net.cfg"
+HKR,"ODI\16 Bit",FileName,,"pnpodi.com"
+HKR,"ODI\16 Bit",LinkDriver,,"pnpodi"
+
+; ODI 32 Bit Info
+HKR,"ODI\32 Bit",ModulePath,,"%24%%DRIVER_32_PATH%"
+HKR,"ODI\32 Bit",Modules,,"LSLC32.NLM,CMSM.NLM,ETHERTSM.NLM"
+HKR,"ODI\32 Bit",DriverPath,,"%24%%DRIVER_32_PATH%"
+HKR,"ODI\32 Bit",FileName,,"pnpsrv.lan"
+
+[pci8029.Ndi.reg]
+; key,subkey,valuname,type,value
+HKR,,DevLoader,,*odiload
+HKR,,EnumPropPages,,"netdi.dll,EnumPropPages"
+
+; Ndi section
+HKR,Ndi,NdiInstaller,,"odipage.dll,odiNdiproc"
+
+; Interfaces
+HKR,Ndi\Interfaces,DefUpper,,"odinsup,NovellODI32"
+HKR,Ndi\Interfaces,UpperRange,,"odinsup,NovellODI32"
+HKR,Ndi\Interfaces,DefLower,,"ethernet"
+HKR,Ndi\Interfaces,LowerRange,,"ethernet"
+
+; Install section
+HKR,Ndi\Install,"16 Bit",,"pci8029.ODI16.Install"
+HKR,Ndi\Install,"32 Bit",,"pci8029.ODI32.Install"
+
+; Remove section
+HKR,Ndi\Remove,"16 Bit",,"pci8029.ODI16.Remove"
+
+; ODI 16 Bit info
+HKR,"ODI\16 Bit",ModulePath,,"%24%%DRIVER_32_PATH%"
+HKR,"ODI\16 Bit",Modules,,"LSLC32.NLM,PC32MLID.LAN"
+HKR,"ODI\16 Bit",DriverPath,,"%24%%DRIVER_16_PATH%"
+HKR,"ODI\16 Bit",NetcfgPath,,"%24%%DRIVER_16_PATH%"
+HKR,"ODI\16 Bit",NetcfgFileName,,"Net.cfg"
+HKR,"ODI\16 Bit",FileName,,"pciodi.com"
+HKR,"ODI\16 Bit",LinkDriver,,"pciodi"
+
+; ODI 32 Bit Info
+HKR,"ODI\32 Bit",ModulePath,,"%24%%DRIVER_32_PATH%"
+HKR,"ODI\32 Bit",Modules,,"LSLC32.NLM,CMSM.NLM,ETHERTSM.NLM"
+HKR,"ODI\32 Bit",DriverPath,,"%24%%DRIVER_32_PATH%"
+HKR,"ODI\32 Bit",FileName,,"pcisrv.lan"
+
+[rtf8129.Ndi.reg]
+; key,subkey,valuname,type,value
+HKR,,DevLoader,,*odiload
+HKR,,EnumPropPages,,"netdi.dll,EnumPropPages"
+
+; Ndi section
+HKR,Ndi,NdiInstaller,,"odipage.dll,odiNdiproc"
+
+; Interfaces
+HKR,Ndi\Interfaces,DefUpper,,"odinsup,NovellODI32"
+HKR,Ndi\Interfaces,UpperRange,,"odinsup,NovellODI32"
+HKR,Ndi\Interfaces,DefLower,,"ethernet"
+HKR,Ndi\Interfaces,LowerRange,,"ethernet"
+
+; Install section
+HKR,Ndi\Install,"16 Bit",,"rtf8129.ODI16.Install"
+HKR,Ndi\Install,"32 Bit",,"rtf8129.ODI32.Install"
+
+; Remove section
+HKR,Ndi\Remove,"16 Bit",,"rtf8129.ODI16.Remove"
+
+; ODI 16 Bit info
+HKR,"ODI\16 Bit",ModulePath,,"%24%%DRIVER_32_PATH%"
+HKR,"ODI\16 Bit",Modules,,"LSLC32.NLM,PC32MLID.LAN"
+HKR,"ODI\16 Bit",DriverPath,,"%24%%DRIVER_16_PATH%"
+HKR,"ODI\16 Bit",NetcfgPath,,"%24%%DRIVER_16_PATH%"
+HKR,"ODI\16 Bit",NetcfgFileName,,"Net.cfg"
+HKR,"ODI\16 Bit",FileName,,"rtfodi.com"
+HKR,"ODI\16 Bit",LinkDriver,,"rtfodi"
+
+; ODI 32 Bit Info
+HKR,"ODI\32 Bit",ModulePath,,"%24%%DRIVER_32_PATH%"
+HKR,"ODI\32 Bit",Modules,,"LSLC32.NLM,CMSM.NLM,ETHERTSM.NLM"
+HKR,"ODI\32 Bit",DriverPath,,"%24%%DRIVER_32_PATH%"
+HKR,"ODI\32 Bit",FileName,,"rtfsrv.lan"
+
+;****************************************************************************
+;       Install Section
+;****************************************************************************
+[pnp8019.ODI16.Install]
+CopyFiles=pnp8019.ODI16.CopyFiles
+UpdateAutoBat=pnp8019.ODI16.autobat
+
+[pnp8019.ODI32.Install]
+CopyFiles=pnp8019.ODI32.CopyFiles
+UpdateAutoBat=pnp8019.ODI32.autobat
+
+[pnp8019.ODI16.autobat]
+CmdDelete=LSL
+CmdDelete=N16ODI
+CmdDelete=NESL
+CmdDelete=PNPODI             ; 11.11.96
+CmdDelete=ODIHLP
+CmdAdd=LSL.COM,  "-c=%24%%DRIVER_16_PATH%NET.CFG"
+CmdAdd=N16ODI.COM
+CmdAdd=NESL.COM
+CmdAdd=pnpodi.com
+
+[pnp8019.ODI32.autobat]
+CmdDelete=LSL
+CmdDelete=N16ODI
+CmdDelete=NESL
+CmdDelete=PNPSRV             ; 11.11.96
+CmdDelete=ODIHLP
+
+[pci8029.ODI16.Install]
+CopyFiles=pci8029.ODI16.CopyFiles
+UpdateAutoBat=pci8029.ODI16.autobat
+
+[pci8029.ODI32.Install]
+CopyFiles=pci8029.ODI32.CopyFiles
+UpdateAutoBat=pci8029.ODI32.autobat
+
+[pci8029.ODI16.autobat]
+;CmdDelete=LSL
+;CmdDelete=NE1500T
+;CmdDelete=ODIHLP
+;CmdAdd=LSL.COM,  "-c=%24%%DRIVER_16_PATH%NET.CFG"
+;CmdAdd=N16ODI.COM
+;CmdAdd=NESL.COM
+;CmdAdd=PCIODI.COM
+
+CmdDelete=LSL
+CmdDelete=N16ODI
+CmdDelete=NESL
+CmdDelete=pciodi             ; 11.11.96
+CmdDelete=ODIHLP
+CmdAdd=LSL.COM,  "-c=%24%%DRIVER_16_PATH%NET.CFG"
+CmdAdd=N16ODI.COM
+CmdAdd=NESL.COM
+;CmdAdd=pciodi.COM
+
+[pci8029.ODI32.autobat]
+CmdDelete=LSL
+CmdDelete=N16ODI
+CmdDelete=NESL
+CmdDelete=PCISRV             ; 11.11.96
+CmdDelete=ODIHLP
+
+[rtf8129.ODI16.Install]
+CopyFiles=rtf8129.ODI16.CopyFiles
+UpdateAutoBat=rtf8129.ODI16.autobat
+
+[rtf8129.ODI32.Install]
+CopyFiles=rtf8129.ODI32.CopyFiles
+UpdateAutoBat=rtf8129.ODI32.autobat
+
+[rtf8129.ODI16.autobat]
+CmdDelete=LSL
+CmdDelete=N16ODI
+CmdDelete=NESL
+CmdDelete=rtfodi             ; 11.11.96
+CmdDelete=ODIHLP
+CmdAdd=LSL.COM,  "-c=%24%%DRIVER_16_PATH%NET.CFG"
+CmdAdd=N16ODI.COM
+CmdAdd=NESL.COM
+CmdAdd=rtfodi.COM
+
+[rtf8129.ODI32.autobat]
+CmdDelete=LSL
+CmdDelete=N16ODI
+CmdDelete=NESL
+CmdDelete=rtfsrv             ; 11.11.96
+CmdDelete=ODIHLP
+
+;****************************************************************************
+;       Remove Section
+;****************************************************************************
+[pnp8019.ODI16.Remove]
+UpdateAutoBat=pnp8019.ODI16.AutoBatRemove
+
+[pnp8019.ODI16.AutoBatRemove]
+CmdDelete=LSL
+CmdDelete=N16ODI
+CmdDelete=NESL
+CmdDelete=pnpodi             ; 11.11.96
+
+[pci8029.ODI16.Remove]
+UpdateAutoBat=pci8029.ODI16.AutoBatRemove
+
+[pci8029.ODI16.AutoBatRemove]
+CmdDelete=LSL
+CmdDelete=N16ODI
+CmdDelete=NESL
+CmdDelete=PCIODI             ; 11.11.96
+
+[rtf8129.ODI16.Remove]
+UpdateAutoBat=rtf8129.ODI16.AutoBatRemove
+
+[rtf8129.ODI16.AutoBatRemove]
+CmdDelete=LSL
+CmdDelete=N16ODI
+CmdDelete=NESL
+CmdDelete=RTFODI             ; 11.11.96
+
+;****************************************************************************
+;       general Ethernet Frame-Type params
+;****************************************************************************
+[ODI.Common.CFG.reg]
+; First Logical Board
+HKR,Ndi\params\Frame1,ParamDesc,,"1. Frame Type"
+HKR,Ndi\params\Frame1,default,,1
+HKR,Ndi\params\Frame1,type,,enum
+HKR,Ndi\params\Frame1,optional,,0
+HKR,Ndi\params\Frame1\enum,1,,"Ethernet_802.2"
+HKR,Ndi\params\Frame1\enum,2,,"Ethernet_SNAP"
+HKR,Ndi\params\Frame1\enum,3,,"Ethernet_II"
+HKR,Ndi\params\Frame1\enum,4,,"Ethernet_802.3"
+
+; Second Logical Board
+HKR,Ndi\params\Frame2,ParamDesc,,"2. Frame Type"
+HKR,Ndi\params\Frame2,default,,2
+HKR,Ndi\params\Frame2,type,,enum
+HKR,Ndi\params\Frame2,optional,,0
+HKR,Ndi\params\Frame2\enum,1,,"Ethernet_802.2"
+HKR,Ndi\params\Frame2\enum,2,,"Ethernet_SNAP"
+HKR,Ndi\params\Frame2\enum,3,,"Ethernet_II"
+HKR,Ndi\params\Frame2\enum,4,,"Ethernet_802.3"
+HKR,Ndi\params\Frame2\enum,5,,"Not used"
+
+; Third Logical Board
+HKR,Ndi\params\Frame3,ParamDesc,,"3. Frame Type"
+HKR,Ndi\params\Frame3,default,,3
+HKR,Ndi\params\Frame3,type,,enum
+HKR,Ndi\params\Frame3,optional,,0
+HKR,Ndi\params\Frame3\enum,1,,"Ethernet_802.2"
+HKR,Ndi\params\Frame3\enum,2,,"Ethernet_SNAP"
+HKR,Ndi\params\Frame3\enum,3,,"Ethernet_II"
+HKR,Ndi\params\Frame3\enum,4,,"Ethernet_802.3"
+HKR,Ndi\params\Frame3\enum,5,,"Not used"
+
+; Fourth Logical Board
+HKR,Ndi\params\Frame4,ParamDesc,,"4. Frame Type"
+HKR,Ndi\params\Frame4,default,,4
+HKR,Ndi\params\Frame4,type,,enum
+HKR,Ndi\params\Frame4,optional,,0
+HKR,Ndi\params\Frame4\enum,1,,"Ethernet_802.2"
+HKR,Ndi\params\Frame4\enum,2,,"Ethernet_SNAP"
+HKR,Ndi\params\Frame4\enum,3,,"Ethernet_II"
+HKR,Ndi\params\Frame4\enum,4,,"Ethernet_802.3"
+HKR,Ndi\params\Frame4\enum,5,,"Not used"
+
+; Node Address Override
+HKR,Ndi\params\"Node Address",ParamDesc,,"Node Address Override"
+HKR,Ndi\params\"Node Address",type,,edit
+HKR,Ndi\params\"Node Address",LimitText,,18
+HKR,Ndi\params\"Node Address",UpperCase,,1
+HKR,Ndi\params\"Node Address",default,,""
+HKR,Ndi\params\"Node Address",flag,1,20,00,00,00
+HKR,Ndi\params\"Node Address",optional,,1
+
+; Bus Name
+;HKR,Ndi\params\"BUS",ParamDesc,,"Bus Name"
+;HKR,Ndi\params\"BUS",type,,edit
+;HKR,Ndi\params\"BUS",LimitText,,32
+;HKR,Ndi\params\"BUS",UpperCase,,1
+;HKR,Ndi\params\"BUS",default,,""
+;HKR,Ndi\params\"BUS",optional,,1
+
+; Board Number
+HKR,Ndi\params\"BOARD",ParamDesc,,"ISA Board Number"       ; 11.11.96
+HKR,Ndi\params\"BOARD",type,,int                           ; 11.11.96
+HKR,Ndi\params\"BOARD",default,,1                          ; 11.11.96
+HKR,Ndi\params\"BOARD",min,,1                              ; 11.11.96
+HKR,Ndi\params\"BOARD",max,,4                              ; 11.11.96
+HKR,Ndi\params\"BOARD",step,,1                             ; 11.11.96
+HKR,Ndi\params\"BOARD",optional,,1                         ; 11.11.96
+HKR,NDI\params\"BOARD",flag,1,20,00,00,00                  ; 11.11.96
+
+; PCI Slot #
+;-------------------------------------
+HKR,Ndi\params\"SLOT",ParamDesc,,"PCI Slot Number"
+HKR,Ndi\params\"SLOT",default,,1
+HKR,Ndi\params\"SLOT",type,,int
+HKR,Ndi\params\"SLOT",min,,1
+HKR,Ndi\params\"SLOT",max,,65535
+HKR,Ndi\params\"SLOT",step,,1
+HKR,Ndi\params\"SLOT",optional,,1
+HKR,Ndi\params\"SLOT",HIN,,##
+HKR,Ndi\params\"SLOT",flag,1,20,00,00,00
+
+; Help section
+HKR,Ndi,HelpText,,%ODIMLID_HELP%
+
+;****************************************************************************
+; File to be copied
+;****************************************************************************
+[pnp8019.ODI32.CopyFiles]
+pnpsrv.LAN,,,5
+
+[pnp8019.ODI16.CopyFiles]
+pnpodi.com,,,5
+LSL.com,,,5
+N16ODI.COM,,,5
+NESL.COM,,,5
+
+[pci8029.ODI32.CopyFiles]
+pcisrv.LAN,,,5
+
+[pci8029.ODI16.CopyFiles]
+pciodi.com,,,5
+LSL.com,,,5
+N16ODI.COM,,,5
+NESL.COM,,,5
+
+[rtf8129.ODI32.CopyFiles]
+rtfsrv.LAN,,,5
+
+[rtf8129.ODI16.CopyFiles]
+rtfodi.com,,,5
+LSL.com,,,5
+N16ODI.COM,,,5
+NESL.COM,,,5
+;LSL.msg,,,5
+;NESL.msg,,,5
+
+;****************************************************************************
+; Source Disk Names & Source Disk Files
+;****************************************************************************
+[SourceDisksNames]
+42=%DSK_NOVELL4%,"",0004
+
+[SourceDisksFiles]
+pnpsrv.lan   =42
+pnpodi.com    =42
+pcisrv.lan   =42
+pciodi.com    =42
+rtfsrv.lan   =42
+rtfodi.com    =42
+LSL.com       =42
+N16ODI.COM    =42
+NESL.COM      =42
+
+;****************************************************************************
+; Destination Directories
+;****************************************************************************
+[DestinatioNdirs]
+DefaultDestDir               =11 ; LDID_SYS
+pnp8019.ODI32.CopyFiles       =24,novell\client32
+pnp8019.ODI16.CopyFiles       =24,novell\nwclient
+pci8029.ODI32.CopyFiles       =24,novell\client32
+pci8029.ODI16.CopyFiles       =24,novell\nwclient
+rtf8129.ODI32.CopyFiles       =24,novell\client32
+rtf8129.ODI16.CopyFiles       =24,novell\nwclient
+
+;****************************************************************************
+; Localizable Strings
+;****************************************************************************
+[strings]
+; Provider
+V_N=" Novell"
+
+; Manufacturers
+V_Realtek="Realtek"
+
+;Paths to drivers
+DRIVER_32_PATH="novell\client32\"
+DRIVER_16_PATH="novell\nwclient\"
+DSK_NOVELL4="Novell NetWare Client-32 LAN driver disk"
+
+; Realtek Devices
+*rtl8019.DeviceDesc="Realtek RTL8019 for Novell Netware Client 32"
+*rtl8029.DeviceDesc="Realtek RTL8029 for Novell Netware Client 32"
+*rtl8129.DeviceDesc="Realtek RTL8129 for Novell Netware Client 32"
+
+
+; Context help
+ODIMLID_HELP="The Realtek ODI driver enables you to use either 16-Bit or 32-Bit networking components."
+
+

@@ -1,0 +1,41 @@
+   Windows 95 & OSR2
+
+   Introduction:
+   -------------
+   This document describes the procedure to install  Windows 95
+   driver for Realtek RTL8019 Plug&Play  ethernet adapter.
+
+   Location of Driver:     \WIN95\PNPNT.SYS
+
+   Installing driver procedure on Microsoft Windows 95 :
+   -----------------------------------------------------
+      Windows 95 is the operation system with Plug&Play feature. If you set
+      the  adapter in  Plug&Play  mode,  Windows 95  will  auto-detect your
+      adapter configuration and set it.  The user don't need to do anything
+      for the adapter  configuration  or installing the driver.  If you set
+      the network  card in  jumpless  mode,  you  must setup your driver as
+      following procedure by manual.
+
+      1. When log into Windows 95, click on the "Start" icon ,then move the
+         mouse to "Settings" icon and click on the "Control Panel".
+
+      2. In the Control Panel window, click on the "Network" icon.
+
+      3. In the Network Configuration dialog box, choose the "Add.." button.
+         "Select  Network  Component Type"  dialog  box  appears, and select
+         "Adapter" icon.
+
+      4. In the list of Manufacturers, select "Realtek", and then choose the
+         "OK" button.
+
+      5. Then, you will see  "Realtek RTL8019 Pnp LAN adapter or compatible"
+         in the Network  Configuration  dialog box, select it and then click
+         on the "Properties"  button.
+
+      6. In this dialog box, select "Resources",the screen will come up with
+         settings: IRQ  and  I/O address. Make sure the  values that come up
+         match the actual board settings.
+
+      7. Restarting your system you will acquire network service.
+
+

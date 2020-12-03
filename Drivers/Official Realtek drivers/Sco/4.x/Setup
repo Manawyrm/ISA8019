@@ -1,0 +1,30 @@
+echo "Install PnP driver..."
+echo "Please wait ........."
+if [ ! -x /usr/lib/lli/r0e ]
+then
+    mkdir /usr/lib/lli/r0e
+fi
+doscp a:/sco/Space.c  /usr/lib/lli/r0e/Space.c
+doscp a:/sco/Driver.o /usr/lib/lli/r0e/Driver.o
+doscp a:/sco/Master   /usr/lib/lli/r0e/Master
+doscp a:/sco/System   /usr/lib/lli/r0e/System
+doscp a:/sco/Node     /usr/lib/lli/r0e/Node
+doscp a:/sco/Init     /usr/lib/lli/init/r0e0
+chmod +x   /usr/lib/lli/init/r0e0
+doscp a:/sco/Reconf   /usr/lib/lli/reconf/r0e0
+chmod +x   /usr/lib/lli/reconf/r0e0
+doscp a:/sco/Remove   /usr/lib/lli/remove/r0e0
+chmod +x   /usr/lib/lli/remove/r0e0
+doscp a:/sco/Info     /usr/lib/lli/info/r0e0
+chmod +x   /usr/lib/lli/info/r0e0
+doscp a:/sco/Init     /usr/lib/netconfig/init/r0e0
+chmod +x   /usr/lib/netconfig/init/r0e0
+doscp a:/sco/Reconf   /usr/lib/netconfig/reconf/r0e0
+chmod +x   /usr/lib/netconfig/reconf/r0e0
+doscp a:/sco/Remove   /usr/lib/netconfig/remove/r0e0
+chmod +x   /usr/lib/netconfig/remove/r0e0
+doscp a:/sco/Info     /usr/lib/netconfig/info/r0e0
+chmod +x   /usr/lib/netconfig/info/r0e0
+echo "Transfer End ..."
+
+

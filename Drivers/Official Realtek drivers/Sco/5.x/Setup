@@ -1,0 +1,33 @@
+echo "Install RTL 8019 Ethernet Adapter Driver (MDI)"
+echo "Please wait to transfer files ................"
+if [ ! -x /var/opt/K/SCO/lli/5.0.0l/ID/r2e ]
+then
+    mkdir /var/opt/K/SCO/lli/5.0.0l/ID/r2e
+fi
+doscp a:r2e.h       /var/opt/K/SCO/lli/5.0.0l/ID/r2e/r2e.h
+doscp a:driver.o    /var/opt/K/SCO/lli/5.0.0l/ID/r2e/Driver.o
+doscp a:system      /var/opt/K/SCO/lli/5.0.0l/ID/r2e/System
+doscp a:node        /var/opt/K/SCO/lli/5.0.0l/ID/r2e/Node
+doscp a:master      /var/opt/K/SCO/lli/5.0.0l/ID/r2e/Master
+doscp a:space.c     /var/opt/K/SCO/lli/5.0.0l/ID/r2e/Space.c
+doscp a:space.h     /var/opt/K/SCO/lli/5.0.0l/ID/r2e/space.h
+doscp a:lkcfg       /var/opt/K/SCO/lli/5.0.0l/ID/r2e/lkcfg
+cd  /var/opt/K/SCO/lli/5.0.0l/ID/r2e
+chmod +x r2e.h
+chmod +x Driver.o
+chmod +x System
+chmod +x Node
+chmod +x Master
+chmod +x Space.c
+chmod +x space.h
+chmod +x lkcfg
+if [ ! -x AOF ]
+then
+    mkdir AOF
+fi
+cd AOF
+doscp a:r2e       /var/opt/K/SCO/lli/5.0.0l/ID/r2e/AOF/r2e
+chmod +x r2e
+echo "Transfer End ............"
+echo "Please use netconfig to mount the driver."
+

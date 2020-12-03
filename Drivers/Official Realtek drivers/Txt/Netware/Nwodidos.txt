@@ -1,0 +1,85 @@
+   Workstation for DOS ODI Client
+
+   Introduction:
+   -------------
+   This document describes the procedure to setup the NetWare v3.X , v4.X
+   workstation driver for REALTEK RTL8019 Plug&Play ethernet adapter.
+
+   Location of Driver:     \NWCLIENT\DOS\PNPODI.COM
+
+   Sample Configuration Files:
+   ---------------------------
+      STARTNET.BAT:
+         LSL
+         PNPODI
+         IPXODI
+         NETX or VLM (VLM's for NetWare 4.X )
+
+      NET.CFG
+         LINK DRIVER PNPODI
+              FRAME ETHERNET_802.3
+              EtherID 0123456789AB     ---->  This keyword  is Ethernet
+                                              address of a adapter, and
+                                              only  required  when more
+                                              than one RTL8019 adapters
+                                              exist on one system
+
+   Setup Procedures for NetWare 3.11/3.12 Client :
+   -----------------------------------------------
+      Before you start with the installation process, make sure that
+      the  adapter is properly installed and configured. Make sure that
+      your NetWare workstation operating system is properly installed.
+
+      1. Copy  PNPODI.COM  from the Realtek Driver Diskette subdirectory
+         A:\NWCLIENT to your harddisk.
+
+      2. Create a batch file, or add to your STARTNET.BAT file the commands
+         listed above under STARTNET.BAT
+
+      3. Edit the NET.CFG file that you copied over. Edit the file per your
+         requirements (see examples above).  If there are two frame types
+         listed, whichever frame type is listed first, that is the one that
+         the driver will load.  See above for examples.   The NET.CFG file
+         should be in the same directory with LSL.COM file.
+
+
+   Setup Procedures for NetWare 4.X Client with vlm:
+   -----------------------------------------------
+      The  installation utility  INSTALL.EXE  is  located on NetWare's
+      "Workstation for DOS" disk. Run INSTALL.EXE from the Workstation
+      for DOS Disk.
+
+      The NetWare Client Install program screen will appear.  You must
+      complete each of the questions.  These options are specific to your
+      needs.
+
+      1. Enter the destination directory for the NetWare Client.
+         (The default directory is C:\NWCLIENT.)
+
+      2. Gives you the option to automatically update the CONFIG.SYS
+         and the AUTOEXEC.BAT files or modify them at a later time manually.
+
+      3. Do you wish to install support for MS Windows ? (Y/N)
+         (MS Windows Subdirectory: default C:\WINDOWS)
+
+      4. Asks you to select a network  driver and  provide  configuration
+         options.  It uses the  specifications  you select to  create the
+         file NET.CFG.  Insert the Realtek drivers disk when prompted for
+         the driver disk and specify the driver path A:\NWCLIENT\DOS
+
+      5. Press <Enter> to install
+
+
+   NOTE:
+   -----
+      1. Be sure to add LASTDRIVE=Z to your CONFIG.SYS file for the
+         network mappings to work properly.
+
+      2. Installing Multiple LAN Adapters:
+         The keyword, EtherID, is provided for multiple LAN adapters in a
+         single system by  PNPODI.COM. If EtherID unknown, you can ignore
+         it in the  NET.CFG  file and directly run  PNPODI  under the DOS
+         prompt,then your screen will  display  every adapter EtherID and
+         select which one you need.
+
+

@@ -1,0 +1,30 @@
+Diskette Contents
+Files on Configuration Disk
+Installing Novell network drivers
+   Workstation for DOS ODI Client
+   Workstation for OS/2 ODI Client
+   Server Driver for NetWare 3.11
+   Server Driver for NetWare 3.12
+   Server Driver for NetWare 4.1
+   Server Driver for NetWare 4.11
+   Client 32 for Windows 95
+Installing IBM network drivers
+   LAN Server for OS/2 2.3
+   LAN Server for OS/2 4.0
+Installing Microsoft network drivers
+   Microsoft Network Client for DOS
+   LAN Manager Workstation/Server
+   Windows for Workgroups v3.10
+   Windows for Workgroups v3.11
+   Windows NT 3.1
+   Windows NT 3.5, 3.51 & 4.0
+   Windows 95 & OSR2
+Installing UNIX network drivers
+   SCO UNIX 4.X
+   SCO UNIX 5.X
+   LINUX
+Other Network Operating System Information
+   Packet Driver
+   LANtastic 4.0
+   LANtastic 5.0
+   LANtastic 6.0  with NDIS driver

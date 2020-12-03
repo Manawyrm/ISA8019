@@ -1,0 +1,299 @@
+:
+#
+#               (C) 1989-1990 The Santa Cruz Operation, Inc.  All Rights
+#               Reserved.  The user has unlimited right to use, modify
+#               and incorporate this code into other products provided
+#               it is used with SCO products and the user includes
+#               this notice and the associated copyright notices with
+#               any such application.
+#
+LIB=/usr/lib/lli
+CONF=/etc/conf
+PATH=/bin:/usr/bin:/etc/:$CONF/bin:$LIB
+#
+# Set possible return codes for this script
+#
+OK=0;   FAIL=1; RELINK=2; DRIVERINUSE=3;
+
+#
+# prompt the user to answer a yes no question or 'q' to quit
+# Usage:
+#       prompt_yn "Message" default
+prompt_yn() {
+        mesg=$1
+        default=$2
+
+        while :
+        do
+                echo "${mesg} (y/n) [${default}] : \c"
+                read result
+
+                case $result in
+                y|Y) result="Y"; return $OK;;
+                n|N) result="N"; return $OK;;
+                "") result=`echo $default | tr "yn" "YN"`; return $OK;;
+                esac
+
+                echo "Illegal value, please type 'y' 'n' or 'q'"
+        done
+}
+
+#
+# Fake up an mdevice and an sdevice for idcheck
+#
+makedevs() {
+        rm -fr /tmp/dev$$
+        mkdir /tmp/dev$$
+        cd /etc/conf/cf.d
+        cp mdevice /tmp/dev$$
+        cd ../sdevice.d
+        cat * > /tmp/dev$$/sdevice
+}
+
+# cleanup removes stuff and exits - if $1 = $DRIVERINUSE, exits value is $2
+cleanup() {
+        tmp=$1
+
+        if [ $tmp -ne $DRIVERINUSE ]
+        then
+                # disallow configuring greater than board zero
+                netconfigdir=/usr/lib/netconfig
+                nextbd=`expr $bd + 1`
+                rm ${netconfigdir}/info/${drv}${nextbd} > /dev/null 2>&1
+                rm ${netconfigdir}/init/${drv}${nextbd} > /dev/null 2>&1
+                rm ${netconfigdir}/remove/${drv}${nextbd} > /dev/null 2>&1
+        else
+                tmp=$2
+        fi
+        cd /
+        rm -fr /tmp/dev$$
+        rm -fr /tmp/$base
+        exit $tmp
+}
+
+system_e3A() {
+        # decrement the 2k block buffers for cleanliness
+        awk '/^NBLK2048/ {
+                OLD=$2-8
+                printf "%s\t%s\n",$1,OLD
+                next
+        }
+        { print } ' < /etc/conf/cf.d/stune > /tmp/bog$$
+        mv /tmp/bog$$ /etc/conf/cf.d/stune
+}
+
+#
+# function to remove address conflicts in the sio driver
+#
+sio_conflict() {
+        currdir=`pwd`
+        cd /etc/conf/pack.d/sio
+        if [ "$BIO" != "0" ]
+        then
+                grep "/* LLI {.*$BIO" space.c > /dev/null && {
+                        echo "Restoring serial cards using base address 0x$BIO into link kit..."
+                        sed -e /"LLI.*$BIO,/s/^\/\* LLI //" space.c >/tmp/bog$$
+                        if [ "$base" = "tok0" ]
+                        then
+                                sed -e /"ibm COM3/s/^\/\* LLI //" /tmp/bog$$ >/tmp/foo$$
+                                mv /tmp/foo$$ /tmp/bog$$
+                        fi
+                        mv /tmp/bog$$ space.c
+                }
+        fi
+        cd $currdir
+}
+
+#
+# function to produce the information for the System file for the token ring
+#
+# if tcp is installed we remove the board from /etc/tcp and /etc/strcf
+#
+cleantcp() {
+        driver=$1
+
+        [ -f /etc/tcp ] && {
+                sed "/$driver/d" /etc/tcp > /tmp/bog$$
+                cp /tmp/bog$$ /etc/tcp
+        }
+        [ -f /etc/strcf ] && {
+                sed "/$driver/d" /etc/strcf > /tmp/bog$$
+                cp /tmp/bog$$ /etc/strcf
+        }
+        rm -f /tmp/bog$$
+        sed "/$driver/d" /etc/conf/cf.d/mdevice > /tmp/bog$$
+        cp /tmp/bog$$ /etc/conf/cf.d/mdevice
+        sed "/$driver/d" /etc/conf/cf.d/sdevice > /tmp/bog$$
+        cp /tmp/bog$$ /etc/conf/cf.d/sdevice
+	rm /etc/conf/node.d/$driver
+	rm -r /etc/conf/pack.d/$driver
+	rm /etc/conf/sdevice.d/$driver
+}
+
+# restorevector check for sio (vecs 3-4) and pa drivers (vec 7)
+# if these are being released by lli then let us restore them to sio or pa
+restorevector() {
+        currdir=`pwd`
+        cd /etc/conf/cf.d
+
+        intvector=$1
+        test="0"
+        [ "$intvector" = "3" ] && test="1"
+        [ "$intvector" = "4" ] && test="1"
+        if [ "$test" = "1" ]
+        then
+                prompt_yn "Restore vector $intvector to sio driver" y
+                [ "$result" = "Y" ] && {
+                        echo "Restoring vector $intvector to sio driver"
+                        siomajor=`./configure -j sio`
+                        ./configure -m $siomajor -c -v $intvector -a -Y
+                        return $OK
+                }
+        fi
+        test="0"
+        [ "$intvector" = "7" ] && test="1"
+        if [ "$test" = "1" ]
+        then
+                prompt_yn "Restore vector $intvector to pa driver" y
+                [ "$result" = "Y" ] && {
+                        echo "Restoring vector $intvector to pa driver"
+                        pamajor=`./configure -j pa`
+                        ./configure -m $pamajor -c -v $intvector -a -Y
+                        return $OK
+                }
+        fi
+        return $OK
+}
+
+# main()
+#
+
+#
+# get the name of the init script being run, since one script
+# is used for multiple drivers; get the number at the end of the
+# script's name
+#
+if [ $# -gt 1 ]
+then
+        name_below=$1; if_below=$2
+        name_above=$3; if_above=$4
+fi
+
+base=`basename $0`
+
+drv=`echo $base | sed -e 's/[0-9]*$//`
+bd=`expr $base : '.*\(.\)'`
+case $drv in
+r0e) PREFIX="r0e";;
+*) echo "ERROR: Unknown LLI driver being configured ($name$bd)";
+        cleanup $FAIL;
+        ;;
+esac
+
+echo "NODE=/etc/conf/node.d/$base" >/tmp/$base.src
+chmod 777 /tmp/$base.src
+
+#
+# check to see if the driver is already in the kernel link-kit so we can
+# either add it or update it later on
+#
+makedevs
+idcheck -p $base
+if [ $? -gt 16 ]
+then
+        installed="TRUE"
+else
+        installed="FALSE"
+fi
+
+if [ "$installed" = "FALSE" ]
+then
+        cleanup $OK
+fi
+
+#
+# Check and Manage our internal chains file.
+#
+# if our board (base) is not in the chain then we always remove the board
+# if our board is in the chain then we check for the chain and remove it.
+# if after our chain is removed from the chains file the board is still there
+#    then we do not remove it.
+#
+chains=/usr/lib/lli/chains
+chain=$base:$name_above
+if grep $base: $chains > /dev/null 2>& 1
+then
+        grep $chain $chains > /dev/null 2>& 1 || {
+                cleanup $OK
+        }
+        # remove our chain
+        awk '{
+                if ($1 == CHAIN && found != 1) {
+                        found = 1
+                        next
+                }
+                print $0
+        }' CHAIN=$chain < $chains > /tmp/bog$$
+        cp /tmp/bog$$ $chains
+        rm -f /tmp/bog$$
+        # Check if it is there in another chain
+        grep $base: $chains > /dev/null 2>& 1 && {
+                cleanup $DRIVERINUSE $OK
+        }
+else
+        cleanup $OK
+fi
+
+echo "Removing $base..."
+
+# Check if we are board zero that no other boards of this type are configured
+[ "$bd" -eq "0" ] && {
+        grep ${drv}[1-3] $chains > /dev/null 2>& 1 && {
+                echo "Warning, You are removing board 0 before other boards"
+                echo "You must remove the other $drv boards next"
+                echo "or your link-kit will be left in an invalid state"
+        }
+}
+
+#
+# Do board dependent processing
+#
+case $drv in
+        e3A)    system_e3A $bd;;
+esac
+
+#if [ $bd -gt 0 ]
+#then
+#       idinstall -d -e $base
+#       cleanup $RELINK
+#fi
+
+# get the interrupt vector for the board that we are removing
+cd /etc/conf/sdevice.d
+ivec=`awk '{ if ( $1 != "*" ) print $6 }' < $base`
+BIO=`awk '{ if ( $1 != "*" ) print $7 }' < $base`
+
+cd /tmp; rm -rf $base
+
+mkdir $base; cd $base
+
+echo "${base}\tN\t1\t5\t1\t9\t0\t0\t0\t0" >System
+if [ $bd -gt 0 ]
+then
+        echo "$base     -       iScH    $PREFIX$bd      0       0       1       256     -1" >./Master
+else
+        cp $LIB/${drv}/Master ./Master
+fi
+idinstall -u -e -s -m $base
+
+# restore sio space.c file
+sio_conflict
+
+cleantcp $base
+restorevector $ivec
+# Check to see if driver for next board is configured
+grep ${drv}`expr ${bd} + 1`: $chains > /dev/null 2>& 1 && {
+        cleanup $DRIVERINUSE $RELINK
+}
+cleanup $RELINK
+

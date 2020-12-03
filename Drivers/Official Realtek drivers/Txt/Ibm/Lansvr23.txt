@@ -1,0 +1,138 @@
+   LAN Server 2.0 or 3.0
+
+   Introduction:
+   -------------
+   This document describes the procedure to install NDIS driver on DOS
+   LAN Requester and  OS/2 LAN server 2.0 (or 3.0) for Realtek RTL8019
+   Plug&Play ethernet adapter.
+
+
+   Location of Driver:  \NDIS\DOS\LAN_23\PNPND.DOS  (for DOS LAN Services)
+                        \NDIS\OS2\PNPND.OS2  (for OS/2 LAN Server)
+
+
+   Installing driver procedure on DOS LAN Requester :
+   --------------------------------------------------
+
+      1. Insert the IBM LAN Support Program (LSP) Version 1.30 (or 1.31)
+         Diskette into your floppy drive A: .
+
+      2. Type A:\dxmaid  and press <Enter> .
+
+      3. The screen will display the IBM logo. Press <Enter> twice until
+         the "Environment Information" appears on screen.
+
+      4. Responds to the screen prompts, specifying the following values
+         for each field,use the <Space Bar> to toggle between choices:
+
+                Configuration for this computer?          Yes
+                Use existing configuration information?   Yes
+                Do you have adapter option diskettes?     Yes
+                Are you configuring for two adapters?     No
+                Do you need 802.2 interface support?      Yes
+
+                Source for LSP                           A:\
+                Target for new configuration             C:\lsp
+
+         Make  sure  that  the values given above are correct, then press
+         <Enter> to store your choices.
+
+      5. Insert the Realtek RTL8019 driver diskette in floppy A,and specify
+         your pathname A:\NDIS\DOS\LAN_23,then press ENTER.
+
+      6. Follow  screen  instructions  to  complete  the  process. Simply
+         pressing <Enter> for each screen display will select the default
+         options. Press <Enter> until you reach the display prompting you
+         to insert the LSP diskette.
+
+      7. Insert the LSP diskette as prompted. Press <Enter> to acknowledge
+         completion of the action.
+
+      8.  A screen  showing  the  current  configuration  detected will be
+          displayed. It should show the  Realtek  RTL8019  adapter and the
+          protocols already selected (i.e., "IBM IEEE 802.2" and
+          "IBM OS/2 NETBIOS").
+
+      9.  Press <F4>. to save the new configuration. This completes the LSP
+          installation.
+
+      10. Save the configuration and reboot your computer.
+
+      11. Insert the DOS LAN Requester Install Diskette 1 into your floppy
+          drive.
+
+      12. Type A:\INSTALL    <Enter>
+
+      13. The IBM logo will again appear on the screen. Press <Enter> to
+          move on to the next screen.
+
+      14. Follow  screen  instructions,  pressing  <Enter>  to move from
+          screen-to-screen until you are prompted to indicate the pathname
+          of the DOS LAN Requester directory (C:\DOSLAN ).
+
+      15. Specify the pathname (C:\DOSLAN is the default) for the DOS LAN
+          Requester directory . Then press <Enter> to continue.
+
+      16. The program will ask you for the services that you require.
+
+      17. Highlight the appropriate option. Select either "Send messages"
+          or "Send, View, Edit, and Log message" option. (Normally, second
+          option "Send, View, Edit and Log message" is selected).
+
+      18. Specify the PC's ID and domain ID.
+
+      19. Follow screen prompts to complete the installation.
+
+
+   Installing driver procedure on OS/2 LAN Server 2.3 :
+   --------------------------------------------------
+      Before you start with the installation  process,  make sure that
+      OS/2 LAN Server  is properly installed.  Similarly, your adapter
+      should also be properly installed in your server.
+
+      1. Copy PNPND.OS2 and RTL8019.NIF files from your Driver diskette
+         (\NDIS\OS2) to C:\IBMCOM\MACS.
+
+      2. Click the OS/2 LAN Service icon.
+
+      3. Select "Installation  and  configuration".  The IBM logo should
+         appear onscreen.
+
+      4. Click <OK>.
+
+      5. Select <Advance> and press <Enter>.
+
+      6. Select "Install or Configuration this Workstation."
+
+      7. Select server type, adding a server or domain controller.  The
+         "install or remove" selections should appear.
+
+      8. Select "Configure a component."
+
+      10. Click the "Configure" button.
+
+      11. Select "Configure workstation."
+
+      12. Select "RTL8019 PnP adapter" when prompted to identify you
+          Network Adapter. Then click the <Add> button.
+
+      13. Select IBM NETBIOS from the list and click the <Add> button.
+
+      14. Select <OK> to confirm all selections.
+
+      15. Follow screen instructions to complete the process, selecting
+          <OK> to accept default selections.
+
+      16. Continue pressing <OK> until your screen prompts you to backup
+          old  CONFIG.SYS and  AUTOEXEC.BAT and create a new  CONFIG.SYS
+          and AUTOEXEC.BAT. Also select <OK> to confirm this.
+
+      17. Installation is complete now. Reset your PC by turning it off
+          and on.
+
+   Note :
+   -----
+      DOS version must be bellow DOS 5.0 when installing DOS LAN requester
+      into your DOS system.
+
+

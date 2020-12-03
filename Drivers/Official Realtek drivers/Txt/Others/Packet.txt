@@ -1,0 +1,73 @@
+   Packet Driver
+
+   Introduction:
+   -------------
+   This document describes the procedure to setup the Packet driver for
+   REALTEK RTL8019 Plug&Play ethernet card.
+
+   Location of Driver:     \PACKET\PNPPD.COM
+   ------------------
+
+   Sample Configuration Files:
+   ---------------------------
+      AUTOEXEC.BAT
+        PNPPD 0x60
+        or
+        PNPPD              (Since the default software interrupt is 0x60 )
+
+   Notes:
+   ------
+      1. Load the packet driver using the software interrupt and any
+         optional switches if required.
+
+         Usage: PNPPD [options] <software_int_no>
+
+         Example: PNPPD -i 0x7e
+
+         The only required parameter is the software interrupt. A packet
+         driver needs to have a software interrupt assigned to it for other
+         programs to access it. The recommended interrupt 0x7e. If you need
+         any of the options listed below, place them before the software
+         interrupt on the command line.
+
+         -i - Force driver to report itself as 802.3 instead of Ethernet II.
+         -d - Delayed initialization.  Used for diskless booting
+         -n - NetWare conversion.  Converts 802.3 packets into 8137 packets
+         -w - Windows hack, obsoleted by winpkt
+         -p - Promiscuous mode disable
+         -h - Help
+         -u - Uninstall
+
+      2. This is an auto sensing packet driver.  That means it will auto-
+         matically scan the system until it finds the adapter I/O address
+         and IRQ. The software interrupt will still need to be given in the
+         command line when invoking the packet driver.(if not be given, the
+         default value is 0x60)
+
+      3. Run PNPPD.COM, the screen will appear following message:
+
+         Found Card 0:EtherID=52:54:4C:19:01:B8,IO=300,IRQ=5 on 16-bit slot
+         Driver is attached to card 0. It is configurated as:
+         System: [345]86 processor, ISA bus, Two 8259s
+         Packet driver software interrupt is 0x60 (96)
+         Interrupt(IRQ) number 0x5 (5)
+         I/O port 0x300 (768)
+         My Ethernet address is 52:54:4C:19:01:B8
+
+      4. Installing Multiple LAN Adapters:
+         If there are multiple network cards on the main board. the user
+         run PNPPD.COM directly, then the screen will display :
+
+      Found Card 0: EtherID=52:54:4C:19:00:11,IO=220,IRQ=5 on 16-bit slot.
+      Found Card 1: EtherID=52:54:4C:19:01:BA,IO=300,IRQ=3 on 16-bit slot.
+      Please specify which card the driver attach (0-1):
+
+         if select 0 ,then disply :
+
+         Driver is attached to card 0. It is configurated as:
+         System: [345]86 processor, ISA bus, Two 8259s
+         Packet driver software interrupt is 0x60 (96)
+         Interrupt(IRQ) number 0x5 (5)
+         I/O port 0x220 (544)
+         My Ethernet address is 52:54:4C:19:00:11
+

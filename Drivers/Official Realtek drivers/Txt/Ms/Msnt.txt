@@ -1,0 +1,45 @@
+   Windows NT 3.5, 3.51 & 4.0
+
+   Introduction:
+   -------------
+   This document describes the procedure to install  Windows NT v3.5, v3.51
+   & v4.0 driver for Realtek RTL8019 Plug&Play  ethernet adapter.
+
+   Location of Driver:     \WINNT\PNPNT.SYS
+
+   Installing driver procedure on Microsoft Windows NT :
+   -----------------------------------------------------
+   When you are in Windows NT :
+   1. In the Main group of NT, select the "Control Panel" icon.
+
+   2. In the Control Panel window, choose the "Network" icon.
+
+   3. In the Network Settings dialog box, choose the "Add Adapter" button.
+      The Add Network Adapter dialog box appears.
+
+   4. In the list of network cards, select "<other> Requires disk from
+       manufacturer", and then press <Enter> button.
+
+   5. Insert the Realtek driver disk in drive A, enter drive and pathname
+       A:\ which is the path where the setup
+       file OEMSETUP.INF are located, and then choose the OK button.
+
+   6. The screen will appear "Input EthernetID" dialog box which is provide
+      by PNPNT.SYS driver. This option is only required when you have more
+      than one Realtek RTL8019 PnP LAN adapters on this computer.   Select
+      SKIP if only one adapter is installed on this computer.
+
+   7. NT will then perform the binding process.  If any additional network
+      software options were installed,  you may be  prompted for  specific
+      information for these packages.
+
+   8. Restarting your system you will acquire network service.
+
+   NOTES:
+   ------
+      *  Installing Multiple LAN Adapters:
+         Enter Windows NT and follow above setup procedure step 2,in the
+         "Network Settings" dialog box, choose the "Configure.." button.
+         The "Input Ethernet ID"  dialog box appears and input adapter's
+         Ethernet ID. Last step to select OK and close NETWORK SETUP.
+         Select SKIP if only one adapter is installed on this computer.

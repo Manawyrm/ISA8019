@@ -1,0 +1,97 @@
+
+                                                                3/1/1995
+                      SCO UNIX PnP Driver
+                     RTL PnPSCO Installation
+         ==================================================
+
+
+The following files will be used in this installation:
+
+Files          Contents
+-----------    -----------------------------------------
+driver.o       RTL SCOPnP Driver Program
+setup          Transfer dos format to unix format setup program
+info           Used by netconfig
+init           Used by netconfig
+master         Used by netconfig
+node           Used by netconfig
+reconf         Used by netconfig
+remove         Used by netconfig
+space.c        Used by netconfig
+system         Used by netconfig
+
+1. Login as root user. (On maintenance mode)
+
+2. (a) Installtion Diskette in UNIX format.
+
+       # custom
+
+       Select Install
+       Select A New Product
+       Select entire to install all of the packages
+
+   (b) Installation Diskette in DOS format.
+       Put RTL SCO UNIX Driver diskette to floppy A: and use doscp
+       command to copy RTL SCO UNIX PnP Driver into UNIX's directories.
+
+       # cd /
+       # doscp A:/sco/setup  /setup
+
+       !! if you don't have the directory ,namely,"a:/sco/."  in
+          the disk, you should modify the content of the setup file in the
+          the floppy. Please check the content of the setup file.
+
+       # chmod +x /setup
+       # ./setup
+
+4.     Use netconfig utility
+
+       Avaiable options:
+
+       # netconfig
+
+       1) Add a chain
+       2) Remove a chain
+       3) Reconfigure an element in a chain
+       4) Quit                                          Select 1. Add a chain
+
+5. Select top level of chain to Add or q to quit:       4. sco_tcp
+                                                        (SCO TCP/IP for UNIX)
+6. Select next level of chain to Add or q to quit:      Select RTL PnP Family
+                                                        Ethernet Driver board 0
+7. Add chain sco_tcp -> pnp0 (y/n)                      type 'y'
+
+8. Enter the internet Address of this interface         n.n.n.n
+
+9. Enter the netmask for this interface                 (default 255.255.255.0)
+
+10. Does the interface use a broadcast address of all 1's (y/n)  default : y
+
+11. Enter the boardcast address for this interface       default: n.n.n.n
+
+12. Are these values correct ? (y/n)                    y
+
+13. Pseudo ttys are currently configured, do you want to:
+
+       1) Add Pseudo ttys
+       2) Remove Pseudo ttys
+       Select an option or enter q to quit [q]          q
+
+14.Available options:
+
+       1) Add a chain
+       2) Remove a chain
+       3) Reconfigure a element in a chain
+       q. Quit                                          Select option: q
+
+15. Do you want to relink to kernel now ?               y
+
+16. Do you want this kernel to boot by default (y/n)    y
+
+17. Do you want the kernel environment rebuilt (y/n)    y
+
+18. Reboot unix
+
+        # shutdown -y -g0
+
+

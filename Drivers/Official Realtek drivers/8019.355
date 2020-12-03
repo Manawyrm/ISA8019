@@ -1,0 +1,315 @@
+
+Driver History:
+                    
+-------------------------------------------------------------------------------
+
+RSET8019:  
+
+V1.00 - 1994.11.17 - \New
+V1.10 - 1995.01.15 - \Active status may be wrong after boot.
+		     \Autoload fail bug.
+		     \Improve hardware reset checking.
+
+V1.20 - 1995.03.01 - \Reflect BROM status at bit 0 of logical_id_flag0
+		     \Fix full duplex mode inconsistency
+		     \disable Ctrl-Alt-Del key
+		     \Correct a diagnotics bug which cause 
+                      error when running diagnotics between a slow 286 and a 
+                      fast 486
+
+V1.30 - 1995.06.01 - \Change to large mode.
+                     \Restore original CSN before exit reset.
+                     \Add /t (test log file) option.
+                     \Change multiple cards selection.
+		    
+V2.00 - 1995.08.21 - \Change CUSTOM SETUP to SETUP.
+                     \Move DEFAULT SETUP under SETUP.
+		     \Add resource data management function.
+		     \Ablility to recover from bad 9346.
+		     \(Using default Realtek resource data. you can
+		       modify it under SetResourceData(). )
+	             \Fix CSN problem(can not locate adapter when CSN is
+		      set under non-pnp environment).
+		     \Always activate adapter when Boot ROM enabled
+		      under PnP mode.
+
+V2.10 - 1995.11.01 - \Change 'RSET' message to 'RSET ' message.
+		     \Fix a problem occurs when CSN <> 0 and adapter
+		      is inactive.
+
+		     \Change AdapterMode recognition algorithm to adapt
+		      new version of PnP adapter.
+
+
+V3.00 - 1996.04.15 - \Fix a problem occurs when multiple cards exist.
+
+		     \Add supports for RTL8019AS.
+
+V3.10 - 1996.05.27 - \Add supports for RTL8019A and RTL8019AS.
+
+V3.30 - 1997.01.28 - \Add IOMS supports for RTL8019AS.
+		     \Fix Hanging problem with fast PC during Diagnostic 
+                      on Network.
+
+
+
+
+
+-----------------------------------------------------------------------------
+
+Boot Rom: Novell/Microsoft/IBM RPL Boot Rom Program
+
+V2.01 - 1995.05.12 - \New release version.
+
+V2.02 - 1995.06.30 - \To avoid some problem on PnP environment.We should used
+                      BSM.ASM to replease the BSMA.ASM.
+
+V2.10 - 1995.08.09 - \add supported Boot ROM for Microsoft WinNT,LAN MANAGER
+                      RPL
+
+V2.20 - 1995.08.20 - \Fixed for WinNT a: c: floppy and add Version & Date
+
+
+------------------------------------------------------------------------------
+
+PNPSRV :Netware 3.x , 4.x , 5.x Server Driver
+
+V1.00 - 1994.08.23 - \New release version.
+
+;
+;           1. Driver supports at most 4 RTL8019 cards on the server. It
+;              does not support RTL8019 card in 8-bit ISA slot.
+;
+;           2. In the load pnpnwsrv command line, user can optionally use
+;             "EtherID=" keyword to specify the desired card by its ethernet
+;              address in multi-card case. If more than one card and no
+;              "EtherID=" keyword in command line, driver will prompt user to
+;              select one.
+;
+;           3. In Netware 3.11, user have to load the LSLENH.NLM before
+;              PNPNWSRV.LAN. The old version MONITOR.NLM is not compatible
+;              with the new LSLENH.NLM, user can replace it with a new version
+;              MONITOR.NLM to solve this problem.
+
+
+V1.10 - 1994.12.05 -\
+
+;           1. Add "Board=n" keyword option for users to specify the
+;              desired card in multi-card case.
+;              "n" denotes a digit from 1 to TotalNumberOfCards.
+;              "n" is randomly assigned by the driver and has no physical
+;               meanings.
+;           2. Both "EtherID=" & "Board=" can be specified in the
+;              command-line. "EtherID" has higher priority over "Board".
+;           3. The node address parameters following the "EtherID="
+;              keyword must be all upper case.
+;           4. It is often that the user just want to load drivers to
+;              all cards and don't care about which one is loaded first.
+;              (For example, multiple cards in a file server.)
+;              In this case, the keyword "Board=" is probably a better
+;              choice.
+
+V1.20 - 1995.03.22 -\
+
+;           1. If we call MSMPrintString or MSMPrintStringWarning before
+;              EtherTSMRegisterHSM , it will cause an invalid screen id
+;              pass to screen manager. And it will make Server 3.11 shut
+;              down. It was a series trouble. But in Server 3.12 and 4.0,
+;              only cause a warning meaaage in console.
+
+
+V1.21 - 1995.10.03 -\:Preserved more characters in strings,for patching
+                       (replace) strings.
+
+V3.00 - 1995.12.14 -\ Migrating PNPODI.202 to LDDK 3.02
+
+V3.10 - 1998.07.16 -\ As in VerifyIRQ routine, do not enable promiscuous mode.
+                   -\ Call MSMUnSetIRQ when VerifyIRQ error.
+
+
+
+
+
+
+-----------------------------------------------------------------------------
+
+
+
+DOSODI :Netware DOS ODI client .
+
+
+
+V1.00 - 1994.08.01 -\New release version.
+
+V1.10 - 1994.08.31 -\Driver supports at most 4 RTL8019 Cards.
+
+                   -\Fixed the bug when in PnP environments, Jumper/Jumpless 
+                     Card will not be found.
+
+                   -\In multiple-card case, user can use "EtherID" Keyword in
+                     NET.CFG to specify the desired card this driver to attach.
+                     If there are multi-card and user does not specify "EtherID",
+                     driver will prompt user to select one.
+
+V1.20 - 1994.10.04 -\Uses direct IO scanning logic to locate 8019 Cards.
+
+                   -\In multiple-card case, user can use "EtherID" Keyword in
+                     NET.CFG to specify the desired card this driver to attach. 
+                     If there are multi-card and user does not specify "EtherID", 
+                     driver will prompt user to select one.
+
+                   -\Supports up to eight 8019 cards.
+
+V1.30 - 1994.12.15 -\Use masm 5.1 instead of masm 6.0(masm.exe) which cause bug.
+
+                   -\In all the changes in MSM.ASM T.F.Lin has made, some seem
+                     unnecessary and cause error(PNPODI.COM can be loaded in
+                     memory repeatly with only one MLID section in NET.CFG).
+
+V2.00 - 1995.01.11 -\ Migrate to LDDK 2.0.
+
+V2.01 - 1995.08.30 -\Modify title & version.
+
+V2.02 - 1995.10.03 -\Preserved more characters in strings,
+                     for patching(replace) strings
+
+V3.00 - 1995.12.14 -\Migrate PNPODI.202 to LDDK 3.02
+
+V3.10 - 1998.07.06 -\As in VerifyIRQ routine, do not enable promiscuous mode.
+                   -\Call MSMUnSetIRQ when VerifyIRQ error.
+
+(New)
+
+
+
+
+
+
+-----------------------------------------------------------------------------
+
+
+
+Lantastic 4.x driver:
+
+V1.00 - 1994.09.08 - \New.
+V1.20 - 1994.10.05 - \Uses direct IO scanning logic to locate 8019 Cards.
+                   - \In multiple-card case, user can use "EtherID" Keyword in
+                      NET.CFG to specify the desired card this driver to attach. 
+                      If there are multi-card and user does not specify "EtherID",
+                      driver will prompt user to select one.
+                   - \Supports up to eight 8019 cards.
+
+V1.21 - 1995.10.09 - \Preserved more characters in strings,for patching (replace) 
+                      strings.
+
+
+-----------------------------------------------------------------------------
+
+Lantastic 5.x driver:
+
+V1.00 - 1994.09.09 - \New.
+
+V1.20 - 1994.10.05 - \Uses direct IO scanning logic to locate 8019 Cards.
+ 
+                   - \In multiple-card case, user can use "EtherID" Keyword in
+                      NET.CFG to specify the desired card this driver to attach. 
+                      If there are multi-card and user does not specify "EtherID",
+                      driver will prompt user to select one.
+                   - \Supports up to eight 8019 cards.
+  
+V1.21 - 1995.10.9  - \Preserved more characters in strings,for patching strings.
+
+
+
+--------------------------------------------------------------------------------
+
+Packet Driver:
+
+
+V1.00 - 1994.07.29 - \New release version.
+
+V1.10 - 1994.09.05 - \Driver supports at most 4 RTL8019 Cards.
+                   - \Fixed the bug when in PnP environments, Jumper/Jumpless Card
+                      will not be found.
+
+                   - \In multiple-card case, driver will print out all cards'
+                      information and prompt user to select one.
+
+V1.20 - 1994.10.05 - \Driver supports up to 8 RTL8019 Cards.
+                     \Uses direct IO scanning method to locate 8019 cards.
+
+V1.30 - 1995.07.05 - \Processing parameters about commnd line.
+                     \Add help option  -h .
+
+V1.31 - 1995.10.09 - \Preserved more characters in strings,for patching string.
+
+---------------------------------------------------------------------------------
+
+NDIS 2 :support DOS/OS2 standard NDIS2 driver.
+
+V1.00 - 1994.09.17 - \New
+V1.01 - 1995.09.10 - \Preserved more characters in strings,for patching (replace) 
+                      strings.
+.
+V1.02 - 1995.11.23 - \Fixed the bug that PNPND.DOS can not regist to Windows95
+                      
+V1.30 - 1996.05.21 - \Fix bug that PNPND.OS2 multiple cards driver in
+                       Lan Server 4.0 and Lan Manager 2.1 Server Version.
+
+V2.10 - 1998.08.14 - \Modify low throughput for sending packet under
+(NEW)                  MSCLIENT using TCPIP protocol.
+
+
+-------------------------------------------------------------------------------
+
+NDIS 3:Windows for Workgroup 3.11 .386 driver.   
+
+V1.00 - 1994.08.25 - \New
+V1.01 - 1994.09.17 - \Change get configuration algorithm (direct access);
+                     \Change driver name to PNPND$ and  PNPND.386.
+
+V1.02 - 1996.10.09 - \Change driver name to PNPND$ in RTL8019.c.
+      	             \Add Patch file.
+
+        				
+
+--------------------------------------------------------------------------------
+
+Miniport driver : ndis3 / ndis4 miniport driver for NT 3.5X ,NT 4.0 and win95
+                  win98.
+
+V1.00 - 1995.01.26 - \New
+V1.10 - 1995.08.30 - \Use NT 3.51 DDK.
+V1.20 - 1997.03.05 - \modified for NDISTEST issue in OSR2
+V1.30 - 1997.07.15 - \Fix 8-bit slot problems.
+V2.00 - 1998.09.01 - \Modified from NE2000 source codes from NT DDK 4.0
+                      modified for PC97 certification
+(new)              - \Support win95 driver.   
+
+
+
+---------------------------------------------------------------------------------
+
+SCO 4.x 5.x :SCO UNIX Driver Program
+
+V1.00 - 1995.03.01 - \New release version.
+
+V1.01 - 1995.04.13 - \Fix the install script of setup file
+
+V1.02 - 1995.08.17 - \Fix the install script of setup file
+                     \Modify the remove file to be used under SCO UNIX 5.0
+                     \Change the driver name to avoid the conflict because of
+                      the same driver nasme in the system.
+
+V1.03 - 1995.08.21 - \Preserved more characters in strings,for patching (replace) 
+                      strings.
+
+V2.00 - 1996.02.06 - \Add new driver in the directory 5.x
+                     \The new driver will follow the MDI specification
+                      for the SCO Open Server 5.0.
+
+V2.01 - 1996.02.27 - \Recompile the driver.c under development system release 3.0
+
+
+
+-------------------------------------------------------------------------------

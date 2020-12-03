@@ -1,0 +1,90 @@
+   Microsoft Network Client 3.0 for MS-DOS
+
+   Introduction:
+   -------------
+   This document describes the procedure to setup the Microsoft Network
+   Client for DOS driver on REALTEK RTL8019 Plug&Play ethernet adapter.
+
+   Location of Driver:   \MSCLIENT\PNPND.DOS
+   ------------------
+
+   Sample Configuration Files:
+    ---------------------------
+      PROTOCOL.INI (install creates this file)
+
+          [network.setup]
+          version=0x3110
+          netcard=RTL8019,1,RTL8019,1
+          transport=ms$ndishlp,MS$NDISHLP
+          transport=ms$netbeui,MS$NETBEUI
+          lana0=RTL8019,1,ms$netbeui
+          lana1=RTL8019,1,ms$ndishlp
+
+          [protman]
+          DriverName=PROTMAN$
+          PRIORITY=MS$NDISHLP
+
+          [MS$NDISHLP]
+          DriverName=ndishlp$
+          BINDINGS=RTL8019
+
+          [MS$NETBEUI]
+          DriverName=netbeui$
+          SESSIONS=10
+          NCBS=12
+          BINDINGS=RTL8019
+          LANABASE=0
+
+          [RTL8019]
+          AdapterID=@52544c190011
+          DriverName=PNPND$
+
+   Installation Procedure :
+   ----------------------
+      Before you start with the installation procedure, make sure that the
+      adapter is properly  installed and configured.  Similarly, Make sure
+      that your  Microsoft Network Client is properly installed.
+      (If not, The installation utility SETUP.EXE  is located on Microsoft
+      Network Client v3.0 for MS-DOS Disk. Run SETUP.EXE from Disk and the
+      SETUP  program screen will appear, and You must complete each of the
+      questions. These options are specific to your needs. The installation
+      procedure  will transfer files to a specific directory on the client
+      and modify existing configuration files to fit your specific needs.)
+
+      1. Change to the Microsoft Network Client subdirectory, and run
+         SETUP.EXE
+
+      2. The screen will display some infomation. Press <Enter> .
+
+      3. Responds to the screen prompts, selecting "Change Network
+         Configuration",then press <Enter>.
+
+      4. Move the highlight to "Add Adapter", press <Enter>.
+
+      5. Select "Network adapter not shown on list below ...".
+
+      6. Insert the Realtek RTL8019 driver diskette in floppy A,and
+         specify your pathname A:\MSCLIENT ,then press <Enter>.
+
+      7. Follow  screen  instructions  to  complete  the  process. Simply
+         pressing <Enter> for each screen display will select the default
+         options. Press <Enter> until you reach the display prompting you
+         to reboot your system.
+
+   NOTES:
+   ------
+      1. Parameters for the PROTOCOL.INI file:
+
+         AdapterID : This keyword is provided  by PNPND, and is required
+                     when  more  than  one  RTL8019  adapters exist on one
+                     system.
+
+      2. Installing Multiple LAN Adapters:
+         There are two different method to complete it:
+         (a) Under  DOS  mode, you can modify the AdapterID in file
+             C:\MSCLIENT\PROTOCOL.INI by yourself.
+         (b) Or you can also use the SETUP program  and follow  above
+             setup procedurc step 4,but move the highlight to "Change
+             Setting,then press <Enter>, the screen will prompt you to
+             fill AdapterID value .
+

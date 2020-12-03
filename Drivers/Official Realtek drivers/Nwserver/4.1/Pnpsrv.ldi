@@ -1,0 +1,77 @@
+;DrIvEr DeScRiPtIoN
+
+VER:    1.00
+SYN:    1.00
+
+DR PNPSRV
+{
+        DES:    $DES
+        HELP:   $HELP
+        PAR:    1.00
+        FILE:   PNPSRV.LAN
+        OF:     MSM.NLM, ETHERTSM.NLM
+
+        PR NODE
+        {
+        }
+
+        FR FrameSelect
+        {
+                CH:     'Ethernet_802.3'
+                CH:     'Ethernet_802.2'
+                CH:     'Ethernet_SNAP'
+                CH:     'Ethernet_II'
+                DEF:    1,2
+        }
+
+        PR RETRIES
+        {
+                VAL:    0-255
+                DEF:    5
+        }
+}
+
+DLANG:  4
+;English
+        $DES =  "REALTEK 8019 Ethernet "
+        $HELP = "This driver (PNPSRV.LAN) supports REALTEK 8019
+                network boards installed in ISA slots.
+                 You can install up to four boards as
+                long as their settings do not conflict."
+
+LANG:     6
+;French
+        $DES =  "REALTEK 8019 Ethernet "
+        $HELP = "This driver (PNPSRV.LAN) supports REALTEK 8019
+                network boards installed in ISA slots.
+                 You can install up to four boards as
+                long as their settings do not conflict."
+
+
+LANG:     7
+;German
+        $DES =  "REALTEK 8019 Ethernet "
+        $HELP = "This driver (PNPSRV.LAN) supports REALTEK 8019
+                network boards installed in ISA slots.
+                 You can install up to four boards as
+                long as their settings do not conflict."
+
+
+LANG:     8
+;Italian
+        $DES =  "REALTEK 8019 Ethernet "
+        $HELP = "This driver (PNPSRV.LAN) supports REALTEK 8019
+                network boards installed in ISA slots.
+                 You can install up to four boards as
+                long as their settings do not conflict."
+
+
+LANG:     14
+;Spanish
+        $DES =  "REALTEK 8019 Ethernet "
+        $HELP = "This driver (PNPSRV.LAN) supports REALTEK 8019
+                network boards installed in ISA slots.
+                 You can install up to four boards as
+                long as their settings do not conflict."
+;DrIvEr DeScRiPtIoN EnD
+

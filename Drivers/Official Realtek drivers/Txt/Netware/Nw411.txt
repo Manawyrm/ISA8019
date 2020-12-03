@@ -1,0 +1,62 @@
+   Server Driver for NetWare 4.11
+
+   Introduction:
+   -------------
+   This document describes the procedure to install the NetWare v4.11
+   server driver for REALTEK RTL8019 Plug&Play ethernet adapter.
+
+   Location of Driver:     \NWSERVER\411\PNPSRV.LAN
+
+   Installaton Procedure :
+   ---------------------
+      Before you start with the installation  process,  make sure that
+      the Novell NetWare v4.11 server is properly installed.
+      Similarly, your adapter should also be properly installed in your
+      server.
+      1. Insert the Realtek Driver Diskette into drive A and check the
+         contents of subdirectory  \NWSERVER\411, It should contain the
+         following file :
+
+         PNPSRV.LANÄÄÄ  Novell NetWare V4.11 Server Driver
+         PNPSRV.LDIÄÄÄ  Novell NetWare V4.11 Server Driver Installation
+                        Information File
+
+      2. At the  NetWare prompt (indicated by the Server name), run the
+         INSTALL.NLM program by typing:
+
+         server name: LOAD INSTALL <Enter>
+
+      3. Select "Maintenance/Selective Install" and press <Enter>.
+
+      4. Select  " LAN Driver Options (Configure/Load/...) "  and press
+         <Enter>.
+
+      5. Press the <Ins> key to specify other drivers to install.
+
+      6. Press  <F3>  and specify the driver path (A:\NWSERVER\411)
+         and press <Enter>.
+
+      7. The PNPSRV.LAN driver should appear in your choice list for the
+         'Select a  LAN  Driver' field. Choose this  driver to start the
+         driver loading and  binding  procedure.  This will allow you to
+         load and bind all 4 frame types supported by NetWare.
+
+      8. Add the LOAD and BIND statements you require to the server's
+         AUTOEXEC.NCF file so that the LAN driver will load automatically
+         each time the server starts up.
+
+
+      Installation Notes:
+      -------------------
+      * Installing Multiple LAN Adapters:
+         The keyword "EtherID" is the ethernet address of a adapter. This
+         keyword is provided for multiple LAN adapters in a single server
+         by the driver PNPSRV.LAN.  So, add EtherID in LOAD commands. For
+         example:
+
+         LOAD PNPSRV EtherID=0123456789AB FRAME=Ethernet_802.2 NAME=LAN_A
+         BIND IPX TO LAN_A NET=11
+         LOAD PNPSRV EtherID=0123456789BC FRAME=Ethernet_802.2 NAME=LAN_B
+         BIND IPX TO LAN_B NET=22
+
+

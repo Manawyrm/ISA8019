@@ -1,0 +1,198 @@
+;; NETRTN.INF
+;;
+;; Relatek RTL8019(AS) ISA PnP Ethernet Network Interface Cards.
+;; (NDIS 3.0 driver)
+;;
+;; Copyright 1993-1998, Realtek Semiconductor Corporation
+
+[Version]
+Signature="$CHICAGO$"
+Class=Net
+ClassGUID={4d36e972-e325-11ce-bfc1-08002be10318}
+Provider=%V_MS%
+
+[Manufacturer]
+%V_Realtek%=Realtek
+
+[Realtek]
+%*rtl8019.DeviceDesc%=*rtl8019.ndi, *rtl8019    ; Realtek RTL8019
+
+[SourceDisksNames]
+99="Realtek RTL8019(AS) ISA PnP Ethernet Adapter Driver Disk",,0
+
+[SourceDisksFiles]
+pnpnt.sys       =99,win95,pnpnt.sys,12345
+netrtn.inf      =99,,netrtn.inf,1234
+pnpnd.dos       =99,ndis2dos,pnpnd.dos,12345
+pnpodi.com      =99,nwclient\dos,pnpodi.com,12345
+
+[*rtl8019.ndi]
+AddReg=*RTL8019.ndi.reg,ne2000.ndi.reg,Clone.params.reg,MCASLOT.params.reg
+LogConfig=*rtl8019.LogConfig
+
+;;****************************************************************************
+;;    *RTL8019   Realtek RTL8019
+;;****************************************************************************
+
+[*RTL8019.ndi.reg]
+HKR,Ndi,DeviceID,0,"*RTL8019"
+
+HKR,Ndi\params\slotnumber,flag,1,10,00,00,00
+;HKR,NDI\Params\NetworkAddress,flag,1,30,00,00,00
+
+;HKR,Ndi\params\NetworkAddress,ParamDesc,0,"Network Address"
+;HKR,Ndi\params\NetworkAddress,type,0,edit
+;HKR,Ndi\params\NetworkAddress,default,0,"000000000000"
+;HKR,Ndi\params\NetworkAddress,LimitText,0,12
+;HKR,Ndi\params\NetworkAddress,UpperCase,0,1
+;HKR,Ndi\params\NetworkAddress,Optional,0,1
+
+[*rtl8019.LogConfig]
+IRQConfig=3,4,5,7,9,10,11,12,15
+IOConfig=20@200-3FF%FFE0(3FF::)
+
+
+;;****************************************************************************
+;; NE2000 Drivers
+;;****************************************************************************
+;;Base section for ne2000 users
+[ne2000.ndi.reg]
+;;key,subkey,valuname,type,value
+HKR,,DriverDesc,0,"Realtek RTL8019(AS) ISA PnP Ethernet NIC"
+HKR,,DevLoader,0,*ndis
+HKR,,DeviceVxDs,0,pnpnt.sys
+HKR,,EnumPropPages,0,"netdi.dll,EnumPropPages"
+
+;;NDIS Info
+HKR,NDIS,MajorNdisVersion,1,03
+HKR,NDIS,MinorNdisVersion,1,0A
+HKR,NDIS,LogDriverName,0,"PNPNT"
+HKR,NDIS\NDIS2,DriverName,0,"PNPND$"
+HKR,NDIS\NDIS2,FileName,0,"pnpnd.dos"
+HKR,NDIS\ODI,DriverName,0,"pnpodi"
+HKR,NDIS\ODI,FileName,0,"pnpodi.com"
+
+;;Interfaces
+HKR,Ndi\Interfaces,DefLower,0,"ethernet"
+HKR,Ndi\Interfaces,LowerRange,0,"ethernet"
+HKR,Ndi\Interfaces,DefUpper,0,"ndis2,ndis3"
+HKR,Ndi\Interfaces,UpperRange,0,"ndis2,ndis3,odi"
+
+;;Install sections
+HKR,Ndi\Install,ndis3,0,"ne2000.ndis3"
+HKR,Ndi\Install,ndis2,0,"ne2000.ndis2"
+HKR,Ndi\Install,odi,0,"ne2000.odi"
+
+;;extra params for ne2000
+[NE2000.params.reg]
+;;Resources
+HKR,,InterruptNumber,1,04,00,00,00
+HKR,,IOBaseAddress,1,02,00,00,00
+HKR,NDI\params\InterruptNumber,resc,1,04,00,00,00
+HKR,Ndi\params\interruptNumber,ParamDesc,0,"Interrupt Level"
+HKR,NDI\params\InterruptNumber,flag,1,20,00,00,00
+HKR,NDI\params\IOBaseAddress,resc,1,02,00,00,00
+HKR,NDI\params\IOBaseAddress,ParamDesc,0,"I/O Base Address"
+HKR,NDI\params\IOBaseAddress,flag,1,20,00,00,00
+
+;;ndis2
+HKR,NDI\params\Interrupt,resc,1,04,00,00,00
+HKR,Ndi\params\interrupt,ParamDesc,0,"Interrupt Level"
+HKR,NDI\params\Interrupt,flag,1,10,00,00,00
+HKR,NDI\params\IOBase,resc,1,02,00,00,00
+HKR,NDI\params\IOBase,ParamDesc,0,"I/O Base Address"
+HKR,NDI\params\IOBase,flag,1,10,00,00,00
+
+;;****************************************************************************
+;;
+;;****************************************************************************
+
+;;extra params for clones
+[Clone.params.reg]
+;;Resources
+HKR,,InterruptNumber,1,04,00,00,00
+HKR,,IOBaseAddress,1,02,00,00,00
+HKR,NDI\params\InterruptNumber,resc,1,04,00,00,00
+HKR,Ndi\params\interruptNumber,ParamDesc,0,"Interrupt Level"
+HKR,NDI\params\InterruptNumber,flag,1,20,00,00,00
+HKR,NDI\params\IOBaseAddress,resc,1,02,00,00,00
+HKR,NDI\params\IOBaseAddress,ParamDesc,0,"I/O Base Address"
+HKR,NDI\params\IOBaseAddress,flag,1,20,00,00,00
+
+;;ndis2
+HKR,NDI\params\Interrupt,resc,1,04,00,00,00
+HKR,Ndi\params\interrupt,ParamDesc,0,"Interrupt Level"
+HKR,NDI\params\Interrupt,flag,1,10,00,00,00
+HKR,NDI\params\IOBase,resc,1,02,00,00,00
+HKR,NDI\params\IOBase,ParamDesc,0,"I/O Base Address"
+HKR,NDI\params\IOBase,flag,1,10,00,00,00
+
+;;base mca slot section
+[MCASLOT.params.reg]
+;;Adapter Slot Number
+HKR,Ndi\params\slotnumber,ParamDesc,,"Adapter Slot Number"
+HKR,Ndi\params\slotnumber,type,,int
+HKR,Ndi\params\slotnumber,default,,1
+HKR,Ndi\params\slotnumber,min,,1
+HKR,Ndi\params\slotnumber,max,,8
+HKR,Ndi\params\slotnumber,step,,1
+HKR,Ndi\params\slotnumber,optional,,1
+HKR,Ndi\params\slotnumber,flag,1,10,00,00,00
+
+;;****************************************************************************
+;; Drivers
+;;****************************************************************************
+
+;;Install NDIS3
+[ne2000.ndis3]
+CopyFiles=ne2000.ndis3.CopyFiles,ne2000.inf.CopyFiles
+DelFiles=ne2000.DelFiles
+
+[ne2000.ndis3.CopyFiles]
+pnpnt.sys,,,2
+
+[ne2000.inf.CopyFiles]
+netrtn.inf,,,2
+
+[ne2000.DelFiles]
+netrt.inf,,,1
+drvidx.bin,,,1
+drvdata.bin,,,1
+
+;;Install NDIS2
+[NE2000.ndis2]
+CopyFiles=ne2000.ndis2.CopyFiles
+
+[ne2000.ndis2.CopyFiles]
+pnpnd.dos,,,2
+
+;;Install ODI
+[NE2000.odi]
+CopyFiles=ne2000.odi.CopyFiles
+
+[ne2000.odi.CopyFiles]
+pnpodi.com,,,2
+
+;;****************************************************************************
+;; Destination Directories
+;;****************************************************************************
+[DestinationDirs]
+DefaultDestDir              =11 ; LDID_SYS
+ne2000.ndis3.CopyFiles      =11
+ne2000.ndis2.CopyFiles      =26 ; LDID_WINBOOT
+ne2000.odi.CopyFiles        =26
+ne2000.inf.CopyFiles        =17 ; INF
+ne2000.DelFiles             =17
+
+;;****************************************************************************
+;; Localizable Strings
+;;****************************************************************************
+[strings]
+;;Provider
+V_MS="Microsoft"
+
+;;Manufacturers
+V_Realtek="Realtek"
+
+;;PNP Realtek Devices
+*rtl8019.DeviceDesc="Realtek RTL8019(AS) ISA PnP Ethernet NIC"

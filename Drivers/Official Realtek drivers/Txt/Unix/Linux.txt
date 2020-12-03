@@ -1,0 +1,42 @@
+The procedure to activate rtl8019 on linux :
+Hint:RTL8019 is ne2000 compatable.
+
+  step 1: make sure that kernel source code is included
+  		(check /usr/src/linux)
+
+  step 2: recompile kernel:
+                cd to /usr/src/linux, them type 'make menuconfig'
+
+                select the following options(mark them as '*')
+                 .enable module support
+                 .networking support
+                 .TCP/IP networking
+                 .network device support
+                 .ethernet
+                 .ne2000/ne1000 support
+  step 3: after options are selected, exit and run
+                make dep;make clean;make zImage;
+          if no serious error happens, the new kernel 'zImage' will be in
+             /usr/src/linux/arch/i386/boot/zImage.
+          copy this file to root.
+          modify '/etc/lilo.conf' file to point to this new file.
+          run 'lilo'
+          reboot
+
+
+  step 4: when system boots, the driver will be load. then the driver will
+          scan {0x300,0x280,0x320,0x340,0x360} port to see if a card is 
+          there.
+            (you can run 'dmesg' to see the boot message)
+          ps: in some case, PNPISA may assign ioports not in the range. you
+              can use 'rset8019' (in DOS) to set the card in jumpless mode
+              and set ioaddr to one of these ioport.
+
+  step 5: run netconfig to setup TCP/IP
+        (run 'ifconfig' or 'netstat -i' to see if there is a interface 
+        'ne0')
+
+				
+                                
+                                		By Kinston Huang
+	                                                1997.11.17

@@ -1,0 +1,138 @@
+   Windows for Workgroups v3.10
+
+   Introduction:
+   -------------
+   This document describes the procedure to install  Microsoft Windows
+   for Workgroups v3.10 driver for REALTEK RTL8019 Plug&Play  ethernet
+   adapter.
+
+
+   Location of Driver:     \WFW31\PNPND.DOS
+
+
+   Sample Configuration Files:
+   ---------------------------
+      CONFIG.SYS (install will add these lines)
+
+         DEVICE=C:\WINDOWS\PROTMAN.DOS /I:C:\WINDOWS
+         DEVICE=C:\WINDOWS\PNPND.DOS
+    ***  DEVICE=C:\WINDOWS\MSIPX.SYS   (Added if running NetWare)
+         DEVICE=C:\WINDOWS\WORKGRP.SYS
+         LASTDRIVE=P
+
+      PROTOCOL.INI (install creates this file)
+
+        [network.setup]
+        version=0x3100
+        netcard=RTL8019,1,RTL8019
+        transport=ms$netbeui,MS$NETBEUI
+   ***  transport=ms$ipx,MS$IPX        (Added if running NetWare)
+        lana0=RTL8019,1,ms$netbeui
+   ***  lana0=RTL8019,1,ms$ipx         (Added if running NetWare)
+
+        [protman]
+        DriverName=PROTMAN$
+        PRIORITY=MS$NETBEUI
+
+        [RTL8019]
+        DriverName=PNPND$
+        Adapters=RTL8019
+        AdapterID=@0123456789AB
+
+        [MS$NETBEUI]
+        DriverName=netbeui$
+        SESSIONS=10
+        NCBS=32
+        BINDINGS=RTL8019
+        LANABASE=0
+
+   ***  [MS$IPX]                       (Added if running NetWare)
+   ***  Drivername=IPX$                (Added if running NetWare)
+   ***  MediaType=Novell/Ethernet      (Added if running NetWare)
+   ***  Bindings=RTL8019               (Added if running NetWare)
+
+      AUTOEXEC.BAT
+        C:\WINDOWS\NET START
+    *** C:\WINDOWS\MSIPX               (Added if running NetWare)
+    *** C:\WINDOWS\NETX                (Added if running NetWare)
+
+
+      New Windows for Workgroups Installation:
+      ----------------------------------------
+
+      1. When installing Windows for Workgroups, you are prompted for a
+         network driver.  Select the "Unlisted or Updated Network Driver".
+
+      2. Insert the REALTEK adapter driver disk containing OEMSETUP.INF and
+         PNPND.DOS files.
+
+      3. Specify the directory for the driver (A:\WFW31) and select the
+         REALTEK Adapter driver.
+
+      4. Select Advanced options, and make sure the parameters match the
+         card settings.  Check keyword "AdapterID" which is provided by
+         PNPND.DOS .  The installation program copies the necessary files
+         and creates PROTOCOL.INI for use with the adapter.
+
+      5. Continue the installation per Windows for Workgroups instructions.
+
+
+      Existing Windows for Workgroups Installation:
+
+      1. Select the "Control Panel" icon in the Main Group.
+
+      2. Select the "Network" icon.
+
+      3. Select the "Adapters" button.
+
+      4. Select the Add option.
+
+      5. Select "Unlisted or Updated Network Adapter"
+
+      6. Insert the adapter driver disk with OEMSETUP.INF and PNPND.DOS and
+         specify the path A:\WFW31.
+
+      7. Select the REALTEK  adapter driver.
+
+      8. The installation program copies the necessary files and
+         creates PROTOCOL.INI for use with the adapter.
+
+      9. Select "Close" and when prompted, restart computer for changes to
+         take affect and complete the installation.
+
+
+      NOTE:  You must have a terminated cable attached to the adapter
+             when you start Windows for Workgroups.  If you don't, Windows
+             for Workgroups hangs.
+
+   TO ADD NETWARE:
+   ---------------
+      1. Select the "Control Panel" icon in the Main Group.
+
+      2. Select the "Network" icon.
+
+      3. Select the "Networks" button.
+
+      4. Select "Novell Netware" and select the add button.
+
+      5. Select "OK" and close the Network icon.
+
+      6. Select reboot computer and restart Windows.
+
+   NOTES:
+   ------
+      1. Parameters for the PROTOCOL.INI file:
+
+         AdapterID : This keyword is provided  by PNPND, and is required
+                     when  more  than  one  RTL8019  adapters exist on one
+                     system.
+
+      2. Installing Multiple LAN Adapters:
+         There are two different method to complete it:
+         (a) Under  DOS  mode, you can modify the AdapterID in file
+             C:\WFW31\PROTOCOL.INI by yourself.
+         (b) Or you can enter Windows for WorkGroup and follow  above
+             setup procedurc step 2,then click on "Setup.." button, select
+             "Advanced...",fill AdapterID in Value item. Last step to
+             select OK and close NETWORK SETUP.
+

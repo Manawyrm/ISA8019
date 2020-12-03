@@ -1,0 +1,36 @@
+[RTL8019]
+ Type = NDIS
+ Title = "RTL8019 Plug and Play Ethernet Adapter"
+ Version = 2.10
+ DriverName = PNPND$
+ XPORTS = NETBEUI LANDD
+[File]
+ Name = PNPND.DOS
+ Path = IBMCOM\MACS
+
+[NETADDRESS]
+tag = NETADDRESS
+display = "Network adapter address"
+type = Hexstring
+Strlength = 13
+optional = YES
+editable = YES
+help = "This parameter overrides the network address of the network
+ adapter card.  The value of this parameter is a hexadecimal string of
+ 13 digits, as in @52544C333333.  The address must be unique among
+  all other network adapter addresses on the network."
+
+[ADAPTERID]
+tag = ADAPTERID
+display = "Node address"
+type = Hexstring
+Strlength = 13
+optional = YES
+editable = YES
+help = "This parameter using multiple network adapter card.
+  The value of this parameter is a hexadecimal string of
+ 13 digits, as in @52544C333333.  The address must be unique among
+  all other network adapter addresses on the network."
+
+
+

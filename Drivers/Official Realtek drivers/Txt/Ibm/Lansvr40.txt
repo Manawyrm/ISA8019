@@ -1,0 +1,79 @@
+   LAN Server 4.0
+
+   Introduction:
+   -------------
+   This document describes the procedure to install NDIS driver on DOS
+   LAN Requester and OS/2 LAN server 4.0 for Realtek RTL8019 Plug&Play
+   ethernet adapter.
+
+   Location of Driver:  \NDIS\DOS\LAN_4\PNPND.DOS  (for DOS LAN Services)
+                        \NDIS\OS2\PNPND.OS2  (for OS/2 LAN Server)
+
+
+   Installing driver procedure on DOS LAN Requester :
+   --------------------------------------------------
+      Before you start with the installation  process,  make sure that
+      DOS LAN Services is properly installed.  Similarly, your adapter
+      should also be properly installed in your client PC.
+
+      1. Copy PNPND.DOS from your Driver diskette (A:\NDIS\DOS\LAN_4) to DOS
+         LAN Services subdirectory C:\DLS .
+
+      2. Under DOS LAN Requester subdirectory C:\DLS, run INSTALL
+
+      3. The  screen  display  some description. If it's correct, move
+         highlight to "The listed options are correct" item ,then press
+         ENTER.
+
+      4. Move highlight to "Network Card", then press ENTER.
+
+      5. Select "Change driver for network card." item, then press ENTER.
+
+      6. Select "Network card not shown in list below..", then press ENTER.
+
+      7. Insert the Realtek RTL8019 driver diskette in floppy A,and specify
+         the pathname A:\NDIS\DOS\LAN_4,then press ENTER.
+
+      8. RealTek 8019 driver is now installed on your computer, reboot
+         your computer.
+
+      NOTES:
+      ------
+          Parameters for the PROTOCOL.INI file:
+
+            AdapterID : This keyword is provided by PNPND, and is required
+                        when  more than one RTL8019  adapters exist on one
+                        system.
+
+
+   Installing driver procedure on OS/2 LAN Server 4.0:
+   ---------------------------------------------------
+      Before you start with the installation  process,  make sure that
+      OS/2 LAN Server  is properly installed.  Similarly, your adapter
+      should also be properly installed in your server.
+
+      1. In OS/2 window, Click the "MPTS" icon.
+
+      2. The screen will display the IBM Log, press "OK".
+
+      3. Select "Install" button.
+
+      4. Insert the REALTEK RTL8019 driver diskette, specify the driver
+         path A:\NDIS\OS2 and press <Enter>.
+
+      5. When complete above step to load  PNPND.OS2  into OS/2 system,
+         then configure your system.
+
+      6. The same step as step 3, select "Configure" button.
+
+      7. The screen will display "Configure" dialog box and select "LAN
+         adapters and protocols" then press "configure" button.
+
+      8. The screen will display "LAPS Configuration" dialog box, move
+         highlight to "RTL8019 Plug and Play" item in "Network Adapter"
+         window, and select "NetBios" protocol. Press "OK".
+
+      9. Installation is complete now. Reset your PC by turning it off
+          and on.
+
+

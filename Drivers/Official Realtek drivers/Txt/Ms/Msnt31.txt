@@ -1,0 +1,62 @@
+   Windows NT 3.1
+
+   Introduction:
+   -------------
+   This document describes the procedure to install  Windows NT v3.1
+   driver for Realtek RTL8019 Plug&Play  ethernet adapter.
+
+   Location of Driver:     \WINNT31\PNPNT.SYS
+
+   Installing driver procedure on Microsoft Windows NT :
+   -----------------------------------------------------
+   When you are in Windows NT :
+   1. In the Main group of NT, select the "Control Panel" icon.
+
+   2. In the Control Panel window, choose the "Network" icon.
+
+   3. In the Network Settings dialog box, choose the "Add Adapter" button.
+      The Add Network Adapter dialog box appears.
+
+   4. In the list of network cards, select "<other> Requires disk from
+       manufacturer", and then press <Enter> button.
+
+   5. Insert the Realtek driver disk in drive A, enter drive and pathname
+       A:\WINNT31 which is the path  where the driver PNPNT.SYS and setup
+       file OEMSETUP.INF are located, and then choose the OK button.
+
+   6. The screen will appear "Input EthernetID" dialog box which is provide
+      by PNPNT.SYS driver. This option is only required when you have more
+      than one Realtek RTL8019 PnP LAN adapters on this computer.   Select
+      SKIP if only one adapter is installed on this computer.
+
+   7. NT will then perform the binding process.  If any additional network
+      software options were installed,  you may be  prompted for  specific
+      information for these packages.
+
+   8. Restarting your system you will acquire network service.
+
+   NOTES:
+   ------
+      1. Installing Multiple LAN Adapters:
+         Enter Windows NT and follow above setup procedure step 2,in the
+         "Network Settings" dialog box, choose the "Configure.." button.
+         The "Input Ethernet ID"  dialog box appears and input adapter's
+         Ethernet ID. Last step to select OK and close NETWORK SETUP.
+         Select SKIP if only one adapter is installed on this computer.
+
+      2. If you are install Realtek RTL8019 or RTL8029 in Windows NT at
+         first time.  To use the mini-port driver(PNPND.SYS ) on WINDOWS
+         NT 3.1, you must replace the original  system NDIS.SYS file with
+         the A:\WINNT31\NDIS.SYS  file included in this directory.
+
+         For example:
+
+                > cd c:\winnt\system32\drivers
+                > copy a:\winnt31\ndis.sys
+
+            or
+
+                > cd c:\winnt\system32\drivers
+                > rename ndis.sys ndis.bak
+                > copy a:\winnt31\ndis.sys
+

@@ -1,0 +1,83 @@
+   LANtastic 4.0
+
+   Introduction:
+   -------------
+        This document describes the procedure to setup LANtastic 4.0
+        driver for REALTEK RTL8019 Plug&Play ethernet card.
+
+   Location of Driver:     \LANTAS4\PNPLAN.EXE
+   ------------------
+
+   Sample Configuration Files:
+   ---------------------------
+   A. STARTNET (for LANtastic server)
+
+        @ECHO OFF
+        SET LAN_DIR=C:\LANTASTI.NET
+        SET LAN_CFG=C:\LANTASTI
+        PATH C:\LANTASTI;%PATH%
+        SHARE /L:200
+        REM NEX000  IRQ=3 IOBASE=300 16-BIT VERBOSE  ---> Mask this line
+        PNPLAN VERBOSE                               ---> Added for RTL8019
+        AILANBIO
+        REDIR NAME LOGINS=3
+        SERVER
+        NET LOGIN/WAIT \\SERVERNAME NAME
+        NET LPT TIMEOUT 10
+        NET POSTBOX
+
+
+   B. STARTNET.BAT  (for LANtastic workstation)
+
+        @ECHO OFF
+        SET LAN_CFG=C:\LANTASTI
+        PATH C:\LANTASTI;%PATH%
+
+        REM NEX000  IRQ=3 IOBASE=300 VERBOSE        ---> Mask this line
+        PNPLAN  VERBOSE                             ---> Added for RTL8019
+
+        AILANBIO
+        REDIR WORKSTATION_NAME LOGINS=2
+
+        NET LPT TIMEOUT 10
+        NET POSTBOX
+
+
+   Install Realtek drivers for LANtastic 4.0 :
+   ------------------------------------------
+     1. Before you start with the installation  process,  make sure that
+        the LANtastic operation system (server/workstation)  is properly
+        installed.  Similarly,  your  adapter  should  also  be properly
+        installed in your workstation.
+
+     2. Run LANtastic "install" program , and move highlight to "Network
+        Adapter Install" item, then ENTER and selec "Novell NE2000 16-bit
+        ISA bus or Compatible" item.
+
+     3. When have completed installation, then  copy  RTL8019 driver
+        "PNPLAN.EXE" from REALTEK driver diskette A:\LANTAS4 to your
+        LANtastic subdirectory C:\LANTASTI .
+
+     4. Modify STARTNET.BAT file as above sample configuration files.
+
+   Notes:
+   ------
+      Installing Multiple LAN Adapters:
+
+         If there are multiple network cards on the main board. The user
+         modify your startnet.bat file as following :
+
+         PNPLAN VERBOSE
+         AILANBIO
+         PNPLAN/MPX=D7 VERBOSE
+         AILANBIO/MPX=D7/ADAPTER=1
+
+         The first invocation of PNPLAN.EXE and AILANBIO.EXE loads into
+         the first adapter using the default MPX number (C7), and adapter
+         number 0.   The  command line  switches in the second invocation
+         instruct  the  NETBIOS  to  load into the second card,  (adapter
+         number 1) using and DOS MPX number D7.  If problems occur,  the
+         screen will prompt you with error messages. Please refer to your
+         LANtastic 4.0 manual for details on these messages.
+
+

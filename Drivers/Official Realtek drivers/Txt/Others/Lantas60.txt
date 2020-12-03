@@ -1,0 +1,128 @@
+   LANtastic 6.0
+
+   Introduction:
+   -------------
+        This document describes the procedure to setup NDIS driver on
+        LANtastic 6.0 operation system  for REALTEK RTL8019 Plug&Play
+        ethernet card.
+
+
+   Location of Driver:     \MSLANMAN.DOS\DRIVERS\ETHERNET\RTL8019\PNPND.DOS
+
+
+   Sample Configuration Files:
+   --------------------------
+         CONFIG.SYS:
+
+         DEVICE=C:\LANTASTI\PROTMAN.DOS /I:C:\LANTASTI
+         DEVICE=C:\LANTASTI\PNPND.DOS
+         FILES=40
+         BUFFERS=30
+
+
+         STARTNET.BAT:
+
+         @echo off
+         rem LANtastic  Version 6.00  installed 95/05/23 14:11:21
+         rem (for Windows)
+         C:
+         cd C:\LANTASTI
+         SET LAN_CFG=C:\LANTASTI
+         rem If LANtastic is disabled, skip everything.
+         IF EXIST DISABLED GOTO :STARTNET_DONE
+         @echo ===== Begin LANtastic configuration =====
+         PATH C:\LANTASTI;C:\LANTASTI\NW;%PATH%
+         SET LAN_DIR=C:\LANTASTI.NET
+         SET NWDBPATH=C:\LANTASTI\NW
+         rem Please obtain the NETBEUI.EXE program from Microsoft
+         LOADHIGH NETBEUI
+         LOADHIGH AI-NDIS BIND_TO=PNPND_NIF
+         AILANBIO @STARTNET.CFG
+         REDIR TEST @STARTNET.CFG
+         IF EXIST NOSHARE GOTO :NOSHARE
+         SERVER C:\LANTASTI.NET @STARTNET.CFG
+         NET LOGIN \\TEST
+         GOTO :CONTINUE
+         :NOSHARE
+         @echo LANtastic server was installed but turned off.
+         :CONTINUE
+         rem If CONNECT.BAT exists, run it to set up connections.
+         IF EXIST CONNECT.BAT GOTO :CONNECT
+         rem Otherwise set up connections specified during install.
+         NET LPT TIMEOUT 10
+         GOTO :CONNECT_DONE
+         :CONNECT
+         @echo Setting up LANtastic connections from CONNECT.BAT
+         rem Build CONNECT.BAT like this: "NET SHOW/BATCH >
+         C:\LANTASTI\CONNECT.BAT"
+         rem   (or run the batch file SETNET.BAT)
+         call CONNECT.BAT
+         :CONNECT_DONE
+         NET POSTBOX
+         @echo ===== End LANtastic configuration =====
+         :STARTNET_DONE
+         cd \
+
+
+         PROTOCOL.INI:
+
+         ;PROTOCOL.INI for LANtastic Version 6.00
+         ;------------ using
+         ;
+         [PROTMAN]
+           DRIVERNAME = PROTMAN$
+           DYNAMIC = YES
+
+         [PNPND_NIF]
+             DRIVERNAME = PNPND$
+             Adapters=RTL8019
+             AdapterID=@0123456789
+
+   Install Realtek drivers for LANtastic 6.0 : (Using NDIS driver)
+   ------------------------------------------
+      The  installation  procedure  will  transfer  files  to a  specific
+      directory on the workstation and modify existing configuration files
+      to fit your specific needs.  The installation utility INSTALL.EXE is
+      located on LANtastic Network Software Disk 1.   Run INSTALL.EXE from
+      Disk 1  and  the  LANtastic  Install program screen will appear. You
+      must  complete each of the questions.  These options are specific to
+      your needs.
+
+      1. Prompt you to enter a unique Computer Name.
+
+      2. Ask you to  select  the drive that you want LANtastic to
+         be installed on. The default is Drive C:.
+
+      3. Ask  you  to  specify  a  directory  where  you want the
+         LANtastic files to be installed. The default is \LANTASTI.
+
+      4. Ask  you  if you want to Share your Computers Drives  or
+         Printers.
+
+      5. Ask  you  to  select  the  Maximum  Number  of Connected
+         Computers.
+
+      6. Prompt  you  to  select any other LANtastic features that
+         you may want to install.
+
+      7. A summary  screen of the  options you will appear. If it
+         looks  correct  continue  with  the  installation.
+
+      8. Prompt  you  to select a  network  adapter  to  run your
+         LANtastic software on. From the list of adapters , select
+         "NDIS SUPPORT FOR NETWORK ADAPTERS".
+
+      9. Ask  you to insert the  manufacturers   driver  diskette
+         containing the driver files. Insert the  RTL8019  driver
+         diskette into drive A:  and  specify the source path for
+         driver files as A:\
+
+      10. Ask you if you want to Set Up Permanent Drive or Printer
+          Connections.
+
+      11. Another summary screen of the  options  will appear.  If
+          this looks correct then select Perform the Installation
+          and LANtastic will now install the files.
+
+      12. When complete the installation, then reboot your system.
+

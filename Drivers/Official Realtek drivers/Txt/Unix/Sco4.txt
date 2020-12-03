@@ -1,0 +1,111 @@
+   SCO UNIX
+
+   Introduction:
+   -------------
+      This document describes the procedure to install the SCO UNIX driver
+      for REALTEK RTL8019 Plug&Play ethernet adapter.
+
+   Location of Driver:     \SCO\4.X\DRIVER.O
+   ------------------
+
+   The following files will be used in this installation:
+   ------------------------------------------------------
+
+      driver.o    :  RTL PnPSCO Driver Program
+      setup       :  Transfer dos format to unix format setup program
+      info        :  Used by netconfig
+      init        :  Used by netconfig
+      master      :  Used by netconfig
+      node        :  Used by netconfig
+      reconf      :  Used by netconfig
+      remove      :  Used by netconfig
+      space.c     :  Used by netconfig
+      system      :  Used by netconfig
+
+
+   Installing driver procedure on SCO UNIX :
+   ----------------------------------------
+      Before you start with the installation  process,  make sure that the
+      SCO UNIX system is properly installed. Similarly,your adapter should
+      also be properly installed in your machine.
+
+      1. Login as root user. (On maintenance mode)
+
+      2. If you own installation Diskette in DOS format :
+         Put RTL SCO UNIX Driver diskette to floppy A: and use doscp
+         command to copy the file "setup" for installing RTL SCO UNIX
+         PnP Driver into UNIX's directories as following :
+
+         # cd /
+         # doscp A:setup /setup
+
+         !! if you don't have the directory ,namely, "a:/sco/4.x/." in
+            the disk, you should modify contents of the setup file in
+            the floppy. Please check contents of the setup file.
+
+         # chmod +x /setup
+         # ./setup
+
+      4. (a) Use netconfig utility
+             Avaiable options :
+
+             # netconfig
+
+             The screen will display the following messages, and Select
+             item (1) to Add a chain  :
+
+             1) Add a chain
+             2) Remove a chain
+             3) Reconfigure an element in a chain
+             4) Quit
+
+      5. After the above option completed, the screen display next option
+         messages :
+
+         Select item (4) : sco_tcp   SCO TCP/IP for UNIX
+
+      6. When the user completed  the  above option, then various adapter
+         drivers in SCO UNIX occur and select " RTL  PnP  Family Ethernet
+         Driver board 0" item.
+
+      7. Add chain sco_tcp -> pnp0 (y/n),   TYPE 'y'
+
+      8. Enter the internet Address of this interface ,
+         for example : 192.9.9.1
+
+      9. Enter the netmask for this interface (default 255.255.255.0).
+
+      10. Does the interface use a broadcast address of all 1's (y/n),
+          default : y
+
+      11. Enter the boardcast address for this interface,
+          default : xxx.xx.x.255             press ENTER
+
+      12. Are these values correct ? (y/n)   TYPE 'y'
+
+      13. Pseudo ttys are currently configured, do you want to:
+
+             1) Add Pseudo ttys
+             2) Remove Pseudo ttys
+             Select an option or enter q to quit [q]   TYPE 'q'
+
+      14. Available options:
+
+             1) Add a chain
+             2) Remove a chain
+             3) Reconfigure a element in a chain
+             q. Quit
+
+          Select option: q
+
+      15. Do you want to relink to kernel now ?               y
+
+      16. Do you want this kernel to boot by default (y/n)    y
+
+      17. Do you want the kernel environment rebuilt (y/n)    y
+
+      18. Reboot unix
+
+              # shutdown -g0
+
+

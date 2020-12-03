@@ -1,0 +1,85 @@
+   LAN Manager Workstation/Server
+
+   Introduction:
+   -------------
+   This document describes the procedure to setup LAN  Manager 2.1
+   Workstation/Server driver for REALTEK RTL8019 Plug&Play ethernet
+   adapter.
+
+   Location of Driver:(DOS) \MSLANMAN.DOS\DRIVERS\ETHERNET\RTL8019\PNPND.DOS
+                      (OS/2)\MSLANMAN.OS2\DRIVERS\ETHERNET\RTL8019\PNPND.OS2
+
+
+   Sample Configuration Files:
+   ---------------------------
+      CONFIG.SYS (for DOS will contain):
+
+          DEVICE=C:\LANMAN.DOS\DRIVERS\PROTMAN\PROTMAN.DOS /I:C:\LANMAN.DOS
+          DEVICE=C:\LANMAN.DOS\DRIVERS\ETHERNET\RTL8019\PNPND.DOS
+
+
+      CONFIG.SYS (for OS/2 will contain):
+
+          DEVICE=C:\LANMAN.OS2\DRIVERS\PROTMAN\PROTMAN.OS2 /I:C:\LANMAN.OS2
+          DEVICE=C:\LANMAN.OS2\DRIVERS\ETHERNET\RTL8019\PNPND.OS2
+
+
+      PROTOCOL.INI (will contain):
+
+         [RTL8019_NIF]
+         ; RTL8019 RPOTOCOL.INI SAMPLE
+
+           DriverName = PNPND$
+           AdapterID  = @0123456789A  ;  This item is only required when
+                                      ;  more than one RTL8019 adapters
+                                      ;  exist on one system.
+
+   Setup Procedures:
+   -----------------
+      Before you start with the installation process, make sure that the
+      adapter  is properly  installed and  configured.  Make  sure  your
+      Microsoft LAN Manager is properly installed.
+
+      1. Run the appropriate Microsoft Lan Manager SETUP for computer you
+         are setting up.(DOS, OS/2 or OS/2 Server). Select "Configuration"
+         item ,(the Realtek driver isn't included on the Lan Manager disk)
+         and insert the Realtek driver disk, select the Realtek driver and
+         follow the directions.
+
+      2. When completed, reboot your computer .
+
+
+   NOTES:
+   ------
+
+      1. Parameters for the PROTOCOL.INI file:
+
+         DRIVERNAME: This is the one required parameter. See example at top
+                     of this document for syntax.
+
+         AdapterID : This  keyword is provided  by PNPND, and is  required
+                     when  more  than  one  RTL8019  adapters exist on one
+                     system. You must modify the AdapterID value in file,
+                     \LANMAN\PROTOCOL.INI, by yourself.
+
+      2. Sample PROTOCOL.INI for LAN Manager:
+
+           [PROTMAN]
+           DRIVERNAME = PROTMAN$
+           DYNAMIC = YES
+           PRIORITY = NETBEUI
+
+           [NETBEUI_XIF]
+           Drivername = netbeui$
+           SESSIONS = 6
+           NCBS = 12
+           BINDINGS = "RTL8019_NIF"
+           LANABASE = 0
+
+           [RTL8019_NIF]
+           ;
+           ; RTL8019 PROTOCOL.INI Sample Adapter
+           ;
+           DriverName = PNPND$
+           AdapterID  = @0123456789a
+

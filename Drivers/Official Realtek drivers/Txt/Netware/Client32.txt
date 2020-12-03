@@ -1,0 +1,117 @@
+   Netware Client32 Driver
+
+   Introduction:
+   -------------
+   This document describes the procedure to install the NetWare Client32
+   driver for REALTEK RTL8019 Plug&Play ethernet adapter.
+
+   Location of Driver:     \CLIENT32\PNPSRV.LAN
+
+
+   Sample Configuration Files:
+   ---------------------------
+      STARTNET.BAT (Client 32 for DOS will contain):
+
+          SET NWLANGUAGE=English
+          C:\NOVELL\CLIENT32\NIOS.EXE
+          LOAD C:\NOVELL\CLIENT32\LSLC32.NLM
+          LOAD C:\NOVELL\CLIENT32\CMSM.NLM
+          LOAD C:\NOVELL\CLIENT32\ETHERTSM.NLM
+          LOAD C:\NOVELL\CLIENT32\PNPSRV.LAN FRAME=ETHERNET_802.2
+          LOAD C:\NOVELL\CLIENT32\PNPSRV.LAN FRAME=Ethernet_802.3
+          LOAD C:\NOVELL\CLIENT32\PNPSRV.LAN FRAME=Ethernet_II
+          LOAD C:\NOVELL\CLIENT32\PNPSRV.LAN FRAME=Ethernet_SNAP
+
+   A. Driver Installation Procedures on Clien32 for DOS :
+   ------------------------------------------------------
+     1.If you have completed installed the Netware Client 32 for DOS, all
+       you have to do is to modify STARTNET.BAT.  Please see the  sample
+       STARTNET.BAT above. If not, Please follow the next step 2 - step 7.
+
+     2.Run INSTALL.EXE from Netware Client 32 for DOS diskette 1 (or from
+       Netware 4.11 CD).  When  the  product  manual  appears,  mark the
+       "Netware Client 32 for DOS" item, then press <Enter>.
+
+     3.Select "OTHER DRIVERS" item from "32-bit Network Board Drivers" menu,
+       then press <Enter>.
+
+     4.Insert Realtek RTL8019 Driver Diskette, then specify the driver path
+       like A:
+
+     5.Select "Realtek RTL8019 ISA driver", then press <Enter>.
+
+     6.Following instructions to complete the Client32 for DOS software
+       installation.
+
+     7.Reboot your machine.
+
+      Installation Notes:
+      -------------------
+      * Installing Multiple LAN Adapters:
+         The keyword "EtherID" is the ethernet address of a adapter. This
+         keyword is provided for multiple LAN adapters in a single server
+         by the driver PNPSRV.LAN.  So, add EtherID in LOAD commands. For
+         example:
+
+         C:\NOVELL\CLIENT32\NIOS.EXE
+         LOAD LSLC32.NLM
+         LOAD CMSM.NLM
+         LOAD ETHERTSM.NLM
+         LOAD PNPSRV EtherID=0123456789AB FRAME=Ethernet_802.2
+         LOAD PNPSRV EtherID=0123456789BC FRAME=Ethernet_802.2
+
+   B. Driver Installation Procedures on Client32 for Windows 3.x :
+   ---------------------------------------------------------------
+     Refer to Content A. On step 2, mark "Netware Client 32 for DOS"  and
+     "Client 32 for Windows".   On step 4, specify  the  driver path like
+     A:\CLIENT32\PNPSRV.LAN , then  following step  3..7  to complete the
+     installation.
+
+
+   C. Driver Installation Procedures on Client 32 for Windows 95 :
+   ---------------------------------------------------------------
+     If you have installed the Microsoft Client in your Windows 95 system,
+     you should remove the adapter object & NDIS 2/3 driver of the RTL8019
+     adapter from the  Windows 95 system. If you have installed previously
+     Realtek's RTL8019  NDIS 2/3 driver, you should do the following steps
+     before installing the RTL8019 Client 32 driver. ( Note:  If you never
+     pluged Realtek RTL8019 ISA adapter into your PC, Procedure C.1 is not
+     necessary.  And you just start from Procedure C.2)
+
+     C.1 Remove the previously installed adapter object & driver of Realtek
+         RTL8019, if any.
+         -------------------------------------------------------------------
+         1. Click the "My Computer" icon in the Main Program Group.
+         2. Click the "Control Panel" icon from My Computer window.
+         3. Click the "System" icon from the Control Panel window.
+         4. Click the "Network adapter" icon from System window.
+         5. Click the "Realtek RTL8019 PnP Ethernet Adapter" icon from
+             System window.
+         6. Click <Remove> button, then click <OK> button.
+         7. Close the opened windows.
+
+
+     C.2 Driver Installation on Client 32 for Windows 95 :
+     -----------------------------------------------------
+         1. Plug Realtek's RTL8019 adapter into your PC machine.
+         2. Turn the power on to bootup the Windows 95.
+         3. Windows 95 will then prompt the "Realtek RTL8019 Ethernet ISA
+             Adapter" in New Hardware Found dialog box.
+         4. Following instructions to complete the installation,
+             Windows 95 will ask you to keyin the proper path of the
+             following diskette:
+
+             a. Netware Client 32 for Windows 95 Disk
+             b. Realtek RTL8019 PnP Ethernet ISA Adapter Driver Diskette:
+                Insert RTL8019 Driver Diskette, then, assign the path to
+                A:\Client32
+             c. Windows 95 CD-ROM
+
+
+      Installation Notes:
+      -------------------
+      * RTL8019 should be setted in jumpless (non-pnp) mode. If setted in
+        pnp mode,  Windows 95  system  will auto-detect the adapter, then
+        auto-load RTL8019  NDIS3 driver which has been included in OS.
+
+

@@ -1,0 +1,85 @@
+    Diskette Contents
+
+   --------------------------------------------------------------------
+   Files and Dirs      Description
+   --------------------------------------------------------------------
+   VERSION.DOC         This document descripts some information for this
+                       version of the RTL8019 driver disk;
+
+   HELP8019.EXE        Help file viewer;
+
+   MAINMENU.TXT        HELP8019 menu contents. locate it in the same
+                       subdirectory with HELP8019.EXE;
+
+   FILEPATH.LST        HELP8019 text files path. locate it in the same
+                       subdirectory with HELP8019.EXE;
+
+   RSET8019.EXE        RSET8019 program set up the adapter's hardware
+                       configuration and  running diagnostics;
+
+   OEMSETUP.INF        The setup file for NT3.5, NT3.51 & NT4.0;
+
+   NETRTN.INF          The setup file for Win95 & OSR2;
+
+   \TXT                This subdirectory includes all text files for
+                       instruction to install various drivers;
+
+   \CLIENT32           Subdirectory for NetWare Client 32 driver;
+
+   \LANTAS4            Subdirectory for Lantastic 4.0 driver;
+
+   \LANTAS5            Subdirectory for Lantastic 5.0 driver;
+
+   \MSCLIENT           Subdirectory for Microsoft Network Client for
+                       MS-DOS driver;
+
+   \MSLANMAN.DOS       Subdirectory for DOS NDIS drivers for Microsoft
+                       LAN Manager Versions 1.x and 2.x;
+
+   \MSLANMAN.OS2       Subdirectory for OS/2 NDIS drivers for Microsoft
+                       LAN Manager Versions 1.x and 2.x;
+
+   \NDIS               Subdirectory for OS/2 LAN server & DOS LAN
+                       requester driver;
+
+              \DOS     Subdirectory for IBM DOS LAN requester driver;
+
+              \OS2     Subdirectory for IBM OS/2 LAN server driver;
+
+   \NWCLIENT           Subdirectory for Novell NetWare ODI driver;
+
+              \DOS     Subdirectory for Novell NetWare DOS/ODI driver;
+
+              \OS2     Subdirectory for Novell NetWare OS2/ODI driver;
+
+   \NWSERVER           Subdirectory for Novell NetWare Drivers;
+
+              \311     Subdirectory for Novell NetWare V3.11 server driver;
+
+              \312     Subdirectory for Novell NetWare V3.12 server driver;
+
+              \41      Subdirectory for Novell NetWare V4.10 server driver;
+
+              \411     Subdirectory for Novell NetWare V4.11 server driver;
+
+   \PKTDRV             Subdirectory for FTP spec-compliant packet driver
+                       and Sun Microsystems PC/NFS Driver;
+
+   \SCO
+              \4.X     Subdirectory for SCO UNIX 4.X drivers;
+
+              \5.X     Subdirectory for SCO UNIX 5.X drivers;
+
+   \WFW31              Subdirectory containing Windows for WorkGroup 3.10
+                       driver files;
+
+   \WFW311             Subdirectory containing Windows for WorkGroup 3.11
+                       driver files;
+
+   \WIN95              Subdirectory containing Win95 & OSR2 driver files;
+
+   \WINNT31            Subdirectory containing Windows NT3.1 driver files;
+
+   \WINNT              Subdirectory containing Windows NT3.5, NT3.51 & NT4.0
+                       driver files;
+

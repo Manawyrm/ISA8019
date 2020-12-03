@@ -1,0 +1,692 @@
+:
+#
+#               (C) 1989-1990 The Santa Cruz Operation, Inc.  All Rights
+#               Reserved.  The user has unlimited right to use, modify
+#               and incorporate this code into other products provided
+#               it is used with SCO products and the user includes
+#               this notice and the associated copyright notices with
+#               any such application.
+#
+#
+LIB=/usr/lib/lli
+CONF=/etc/conf
+PATH=/bin:/usr/bin:/etc/:$CONF/bin:$LIB
+#
+# Set possible return codes for this script
+#
+OK=0;   FAIL=1; RELINK=2;
+
+BRAM="0"
+ERAM="0"
+
+#
+# Prompt the user for a hex value, it must be within a given range
+# Usage:
+#       prompt_range "Message" default min max [step]
+#
+prompt_range() {
+        mesg=$1
+        default=$2
+        range_min=$3 range_max=$4
+        step="1"
+        if [ $# -eq 5 ]
+        then
+                step=$5
+        fi
+
+        while :
+        do
+                echo "${mesg} (${range_min}..${range_max}) [${default}] or 'q' to quit: \c"
+                read result
+                case $result in
+                Q|q)
+                        return $FAIL
+                        ;;
+                "")
+                        result=$default
+                        ;;
+                esac
+
+                hc $result $range_min $range_max $step
+                case $? in
+                0) return $OK;;
+                1) cleanup $FAIL;;
+                2) cleanup $FAIL;;
+                esac
+        done
+}
+
+# print a prompt
+#
+p() {
+        set -f
+        /bin/echo $*
+        set +f
+        return $?
+}
+
+
+#
+# Prompt the user to make a selection a list of values
+# Usage:
+#       prompt_select "Message" default "value_list"
+prompt_select() {
+        mesg=$1
+        default=$2
+        values=$3
+
+        while :
+        do
+                if [ "$default" = "" ]
+                then
+                        echo "${mesg} (${values}) or 'q' to quit: \c"
+                else
+                        echo "${mesg} (${values}) [${default}] or 'q' to quit: \c"
+                fi
+                read result
+                case $result in
+                Q|q)
+                        return $FAIL
+                        ;;
+                "")
+                        result=$default
+                        ;;
+                esac
+
+                for i in $values
+                do
+                        if [ "$i" = "$result" ]
+                        then
+                                return $OK
+                        fi
+                done
+                echo "Illegal value, must be one of (${values})"
+        done
+}
+
+#
+# prompt the user to answer a yes no question or 'q' to quit
+# Usage:
+#       prompt_yn "Message" default
+prompt_yn() {
+        mesg=$1
+        default=$2
+
+        while :
+        do
+                echo "${mesg} (y/n) [${default}] or 'q' to quit: \c"
+                read result
+
+                case $result in
+                q|Q) return $FAIL;;
+                y|Y) result="Y"; return $OK;;
+                n|N) result="N"; return $OK;;
+                "") result=`echo $default | tr "yn" "YN"`; return $OK;;
+                esac
+
+                echo "Illegal value, please type 'y' 'n' or 'q'"
+        done
+}
+
+#
+# Fake up an mdevice and an sdevice for idcheck
+#
+makedevs() {
+        dir=`pwd`
+        rm -fr /tmp/dev$$
+        mkdir /tmp/dev$$
+        cd /etc/conf/cf.d
+        cp mdevice /tmp/dev$$
+        cd ../sdevice.d
+        cat * > /tmp/dev$$/sdevice
+        cd $dir
+}
+
+cleanup() {
+        cd /
+        rm -fr /tmp/dev$$
+        rm -fr /tmp/$base
+        exit $1
+}
+
+# Removes the given interrupt vector for the $clash device.
+rmvector() {
+        clash=$1
+        vec=$2
+
+        cd $confdir
+        echo "\nRemoving interrupt vector $vec for the $clash device ..."
+
+        [ "$vec" = "2" ] && vec=9
+        major=`./configure -j $clash` && {
+                # remove device but leave it required
+                if [ "$major" != "0" ]
+                then
+                        ./configure -d -c -m $major -v $vec -Y >> conflog 2>&1 || {
+                                cd $currdir
+                                cleanup $FAIL
+                        }
+                else
+                        sed -e "s/Y/N/" ../sdevice.d/$clash > /tmp/bog$$
+                        mv /tmp/bog$$ ../sdevice.d/$clash
+                fi
+                # remove required setting if no more left
+                if grep "Y" ../sdevice.d/$clash > /dev/null 2>&1
+                then
+                        true
+                elif [ "$major" != "0" ]
+                then
+                        ./configure -d -c -m $major -v $vec -R -Y >> conflog 2>&1 || {
+                                cd $currdir
+                                cleanup $FAIL
+                        }
+                fi
+        }
+        cd $currdir
+        return $OK
+}
+
+# On unix, we must check the files in sdevice.d.
+# Sets the variable $clash to the driver code name if there is a driver that
+# has already been allocated the given vector. Uses awk.
+dointclash() {
+        driver=$1
+        vec=$2
+
+        [ "$vec" = "2" ] && vec=9
+        cd $confdir/../sdevice.d
+        clash=`cat * | awk '{ if ( $6 == intr && $2 == "Y" ) exit } \
+                        END { print $1 }' intr=$vec`
+
+        cd $currdir
+
+        [ "$clash" = "" -o "$clash" = "$driver" ] && return $FAIL
+        # found a clash
+        return $OK
+}
+
+checkvec() {
+        driver=$1
+        vector=$2
+        clash=
+
+        currdir=`pwd`
+
+        while dointclash $driver $vector
+        do
+                prompt_select "Interrupt vector $vector is already in use for the $clash device.\n\n\
+The alternatives available to you are:\n\n\
+\t1. Continue the installation and remove vector $vector for the $clash device.\n\
+\t2. Select a different interrupt vector.\n\n\
+Select an option" 1 "1 2" || {
+                        cleanup $FAIL
+                }
+                case $result in
+                1)      rmvector $clash $vector || {
+                                echo "Failed to remove vector $vector"
+                                cleanup $FAIL
+                        }
+                        makedevs
+                        return $OK
+                        ;;
+                2)      return $FAIL
+                        ;;
+                esac
+        done
+        return $OK
+}
+
+doaddrclash() {
+        driver=$1
+        addr1=$2
+        addr2=$3
+
+        cd $confdir
+        clash=`../bin/idcheck -ar -l $addr1 -u $addr2 -i /tmp/dev$$`
+        cd $currdir
+
+        [ "$clash" = "" -o "$clash" = "$driver" ] && return $FAIL
+        # found a clash
+        return $OK
+}
+
+# Removes the $clash device.
+rmaddr() {
+        clash=$1
+
+        cd $confdir
+        echo "\nRemoving the $clash device ..."
+
+        major=`./configure -j $clash` && {
+                # remove device but leave it required
+                if [ "$major" != "0" ]
+                then
+                        ./configure -d -c -m $major -Y >> conflog 2>&1 || {
+                                cd $currdir
+                                cleanup $FAIL
+                        }
+                else
+                        sed -e "s/Y/N/" ../sdevice.d/$clash > /tmp/bog$$
+                        mv /tmp/bog$$ ../sdevice.d/$clash
+                fi
+                # remove required setting if no more left
+                if grep "Y" ../sdevice.d/$clash > /dev/null 2>&1
+                then
+                        true
+                elif [ "$major" != "0" ]
+                then
+                        ./configure -d -c -m $major -R -Y >> conflog 2>&1 || {
+                                cd $currdir
+                                cleanup $FAIL
+                        }
+                fi
+        }
+        cd $currdir
+        return $OK
+}
+
+checkaddr() {
+        driver=$1
+        addr1=$2
+        addr2=$3
+        clash=
+
+        currdir=`pwd`
+
+        while doaddrclash $driver $addr1 $addr2
+        do
+                if [ "$clash" = "ad" ]
+                then
+                        echo "\n\nWARNING: Do not remove the $clash device \c"
+                        echo "if you are using an Adaptec disk controller"
+                fi
+                prompt_select "Addresses $addr1-$addr2 are already in use by the $clash device.\n\n\
+The alternatives available to you are:\n\n\
+\t1. Continue the installation and remove the $clash device.\n\
+\t2. Select a different address.\n\n\
+Select an option" 1 "1 2" || {
+                        cleanup $FAIL
+                }
+                case $result in
+                1)      rmaddr $clash || {
+                                echo "Failed to remove $clash device"
+                                cleanup $FAIL
+                        }
+                        makedevs
+                        return $OK
+                        ;;
+                2)      return $FAIL
+                        ;;
+                esac
+        done
+        return $OK
+}
+
+doramclash() {
+        driver=$1
+        addr1=$2
+        addr2=$3
+
+        cd $confdir
+        clash=`../bin/idcheck -cr -l $addr1 -u $addr2 -i /tmp/dev$$`
+        cd $currdir
+
+        [ "$clash" = "" -o "$clash" = "$driver" ] && return $FAIL
+        # found a clash
+        return $OK
+}
+
+checkram() {
+        driver=$1
+        addr1=$2
+        addr2=$3
+        clash=
+
+        currdir=`pwd`
+
+        while doramclash $driver $addr1 $addr2
+        do
+                prompt_yn "
+Ram addresses $addr1-$addr2 is already in use for the $clash device.
+You must choose a unique address for this device to work.
+Do you wish to choose another address now?" y || cleanup $FAIL
+                if [ "$result" = "Y" ]
+                then
+                        return $FAIL
+                else
+                        cleanup $FAIL
+                fi
+        done
+        return $OK
+}
+
+# On unix, we must check the lines in mdevice file.
+# Sets the variable $clash to the driver code name if there is a driver that
+# has already been allocated the given channel. Uses awk.
+dodmaclash() {
+        driver=$1
+        chan=$2
+        clash=
+
+        # -1 is never a clash
+        [ "$chan" = "-1" ] && return $FAIL
+
+        cd $confdir
+        clash=`awk '{ if ( $9 == dma ) print $1 }' dma=$chan mdevice`
+
+        [ "$clash" = "" ] && {
+                cd $currdir
+                return $FAIL
+        }
+        cat ../sdevice.d/$clash | awk '{ if ( $2 == "Y" ) exit 1 }' || return $OK
+
+        if [ "$rel" = "3.2.0" -o "$rel" = "3.2.1" -o "$rel" = "3.2.2" ]
+        then
+                prompt_yn "
+DMA channel ${chan} is already in use by the $clash device.  However, the
+$clash device is not currently configured into the kernel.  Do you wish to
+remove DMA channel ${chan} from the $clash device?" y || cleanup $FAIL
+                if [ "$result" = "Y" ]
+                then
+                        sed -e "/^$clash        .*[0-9]$/{" \
+                                -e 's/[0-9]$/-1/p' \
+                                -e '}' mdevice > /tmp/bog$$
+                        mv /tmp/bog$$ mdevice
+                        cd $currdir
+                        return $FAIL
+                else
+                        cd $currdir
+                        return $OK
+                fi
+        fi
+
+        # Should be release >3.2.2, clash driver not installed if we get here.
+        cd $currdir
+        return $FAIL
+}
+
+#
+# Check if there is a clash of DMA channels
+#
+checkdma() {
+        driver=$1
+        channel=$2
+        clash=
+
+        currdir=`pwd`
+
+        while dodmaclash $driver $channel
+        do
+                prompt_yn "
+DMA channel ${channel} is already in use by the $clash device.
+You must choose a unique channel for this device to work.
+Do you wish to choose another channel now?" y || cleanup $FAIL
+                if [ "$result" = "Y" ]
+                then
+                        return $FAIL
+                else
+                        cleanup $FAIL
+                fi
+        done
+        return $OK
+}
+
+check_args() {
+        name=$1
+        bd=$2
+
+        case $name in
+        r0e) echo "Configuring PnP ethernet adapter board $bd";
+                PREFIX="r0e";
+                MAX_BD=3;
+                ;;
+        *) echo "ERROR: Unknown LLI driver being configured ($name$bd)";
+                cleanup $FAIL;
+                ;;
+        esac
+
+        if [ $bd -gt $MAX_BD ]
+        then
+                echo "ERROR: Only boards 0..$MAX_BD are supported by this driver";
+                cleanup $FAIL
+        fi
+        echo
+}
+
+#
+# function to produce the info for the System file for the RTL
+# boards
+#
+system_r0e() {
+bd=$1
+IRQ=0;
+DMA=-1;
+BIO=0;
+EIO=0;
+BUS=0;
+DMACHAN=-1
+NMINORS="1"
+echo "Detect PnP ethernet adapter automatically."
+}
+#
+# function to remove address conflicts in the sio driver
+#
+sio_conflict() {
+        currdir=`pwd`
+        cd /etc/conf/pack.d/sio
+        if [ "$type" = "386GT" -a "$base" = "tok0" ]
+        then
+                # get rid of sio access to 0x2f0 (Global Interrupt enable) on AT
+                grep "ibm COM3" space.c > /dev/null && {
+                        echo "Removing ibm COM3 from link kit..."
+                        [ ! -f space.c.rls ] && cp space.c space.c.rls
+                        sed -e /"ibm COM3/s/^{/\/* LLI {/p" space.c > /tmp/bog$$
+                        mv /tmp/bog$$ space.c > /dev/null 2>&1
+                }
+        fi
+        grep "(sd)0x$BIO" space.c > /dev/null && {
+                echo "Removing serial cards using base address 0x$BIO from link kit..."
+                [ ! -f space.c.rls ] && cp space.c space.c.rls
+                sed -e /"(sd)0x$BIO,/s/^{/\/* LLI {/p" space.c > /tmp/bog$$
+                mv /tmp/bog$$ space.c > /dev/null 2>&1
+        }
+        cd $currdir
+}
+
+#
+# determine release, and AT or MCA bus - set rel and type variables accordingly.
+#
+os_type() {
+        rel=`sed -n 's/^#rel=\(.*\).$/\1/p' /etc/perms/rts`
+        if [ "$rel" = "3.2.0" -o "$rel" = "3.2.1" -o "$rel" = "3.2.2" ]
+        then
+                type=`sed -n 's/^#typ=\(.*\)$/\1/p' /etc/perms/inst`
+        else
+                # 3.2.4 - one release supports AT, MCA, and EISA.
+                uname -X | grep "BusType = MCA" >/dev/null 2>&1
+                if [ $? -eq 0 ]
+                then
+                        type=386MC
+                else
+                        type=386GT
+                fi
+        fi
+}
+
+create_scripts()
+{
+        if [ $bd -ne $MAX_BD ]
+        then
+                currdir=`pwd`
+                netconfigdir=/usr/lib/netconfig
+                cd $netconfigdir/info
+                newboard=`expr $bd + 1`
+                newfile=${drv}${newboard}
+                cp ${drv}0 $newfile
+                sed -e '/^NAME=.*'"[^0]"'/s/0\"/'$newboard'\"/p' $newfile > /tmp/bog$$
+                sed -e '/^DESCRIPTION=.*'"[^0]"'/s/0\"/'$newboard'\"/p' /tmp/bog$$ > $newfile
+                rm -r /tmp/bog$$
+                chown bin $newfile
+                chgrp bin $newfile
+                chmod 750 $newfile
+
+                cd $netconfigdir/init
+                ln $base ${drv}`expr $bd + 1` > /dev/null 2>&1
+
+                cd $netconfigdir/remove
+                ln $base ${drv}`expr $bd + 1` > /dev/null 2>&1
+                cd $currdir
+        fi
+}
+
+# main()
+#
+
+#
+# get the name of the init script being run, since one script
+# is used for multiple drivers; get the number at the end of the
+# script's name
+#
+if [ $# -gt 1 ]
+then
+        name_below=$1; if_below=$2
+        name_above=$3; if_above=$4
+        configure=$5
+fi
+
+base=`basename $0`
+drv=`echo $base | sed -e 's/[0-9]*$//`
+bd=`expr $base : '.*\(.\)'`
+chains=/usr/lib/lli/chains
+chain=$base:$name_above
+confdir=/etc/conf/cf.d
+
+makedevs
+check_args $drv $bd
+
+#
+# Check and manage our internal chains file.
+# This file allows coexistent mkdev and netconfig calls.
+#
+# chain already installed
+grep $chain $chains > /dev/null 2>& 1 && {
+        echo $chain >> $chains
+        cleanup $OK
+}
+# this board already installed
+grep $base: $chains > /dev/null 2>& 1 && {
+        echo $base already configured.
+        echo $chain >> $chains
+        [ "$drv" = "tok" -a "$name_above" = "nbe" ] && {
+                space_token
+        }
+        echo "NODE=/etc/conf/node.d/$base" >/tmp/$base.src
+        chmod 777 /tmp/$base.src
+        cleanup $OK
+}
+#
+# Now check that if we are not board zero that board zero is installed
+#
+[ "$bd" -ne "0" ] && {
+        grep ${drv}0 $chains > /dev/null 2>& 1 || {
+                echo "${drv}0 not configured, you must configure it first"
+                cleanup $FAIL
+        }
+}
+
+#
+# check to see if the driver is already in the kernel link-kit so we can
+# either add it or update it later on
+#
+idcheck -p $base -i /tmp/dev$$
+if [ $? -gt 16 ]
+then
+        installed="TRUE"
+else
+        installed="FALSE"
+fi
+
+if [ "$bd" = "0" ]
+then
+        echo "Installing the $drv driver into the link kit"
+        cd /usr/lib/lli/$drv
+        if [ "$installed" = "TRUE" ]
+        then
+                idinstall -u -e -k $base
+        else
+                idinstall -a -e -k $base
+        fi
+        makedevs
+else
+        idcheck -p ${drv}0 -i /tmp/dev$$
+        if [ $? -le 16 ]
+        then
+                echo "${drv}0 must be configured before attempting to configure $drv"
+                cleanup 1
+        fi
+fi
+
+#
+# create the temporary directory for installing the driver
+#
+cd /tmp; rm -rf $base
+mkdir $base; cd $base
+
+DMACHAN="-1"
+
+#
+# set rel, type variables.
+#
+os_type
+
+#
+# Do special board dependent processing
+#
+system_$drv $bd
+
+echo
+if [ "$IRQ" = "2" ]
+then
+        IRQ=9
+fi
+
+echo "$base\tY\t4\t5\t0\t0\t0\t0\t0\t0" >./System
+
+#
+# All the drivers support more than one board.  In fact all the code to
+# support all the boards is in the Driver.o for the board for the 1st board
+# (eg the e3A0 driver acually contains enough code for the e3A1, e3A2 & e3A3
+# boards).  As we need a Driver.o to be associated with 2nd, 3rd or 4th board
+# we install a dummy Driver.o, and a Master and Node which will actually cause
+# calls into the base driver.
+#
+if [ $bd -gt 0 ]
+then
+        echo "$base     -       iScH    $PREFIX$bd      0       0       1       256     $DMACHAN" >./Master
+        echo "clone     $base   c       $base" >./Node
+
+        if [ "$installed" = "TRUE" ]
+        then
+                idinstall -u -m -s -n -e -k $base
+        else
+                cp $LIB/Driver.o .
+                idinstall -a -e -k $base
+        fi
+else
+        echo "$base     I       iScH    $PREFIX 0       0       1       256     $DMACHAN" >./Master
+        idinstall -u -m -s -e -k $base
+fi
+# we successfully installed this driver, add it to the chains file
+echo $chain >> $chains
+
+# create next set of info, init, and remove files
+create_scripts
+
+# delete any potential BASE I/O address conflicts with the sio driver
+[ "$rel" = "3.2.0" -o "$rel" = "3.2.1" -o "$rel" = "3.2.2" ] && sio_conflict
+
+echo "NODE=/etc/conf/node.d/$base" >/tmp/$base.src
+chmod 777 /tmp/$base.src
+
+cleanup $RELINK
+

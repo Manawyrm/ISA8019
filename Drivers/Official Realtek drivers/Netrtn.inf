@@ -1,0 +1,189 @@
+;; NETRTN.INF
+;;
+;; Relatek RTL8019 ISA PnP Ethernet Network Interface Cards.
+;;
+;; Copyright 1997, Realtek Semiconductor Corporation
+
+[Version]
+LayoutFile=layout.inf
+Signature="$CHICAGO$"
+Class=Net
+ClassGUID={4d36e972-e325-11ce-bfc1-08002be10318}
+Provider=%V_MS%
+
+[Manufacturer]
+%V_Realtek%=Realtek
+
+[Realtek]
+%Rtl8019.DeviceDesc%=rtl8019.ndi, *rtl8019
+
+[SourceDisksNames]
+52="Realtek ISA PnP Ethernet RTL8019 Adapter Driver Disk",,0
+
+[SourceDisksFiles]
+pnpnt.sys       =52,win95,pnpnt.sys,12345
+netrtn.inf      =52,,netrtn.inf,1234
+pnpnd.dos       =52,ndis2dos,pnpnd.dos,12345
+pnpodi.com      =52,nwclient\dos,pnpodi.com,12345
+
+[rtl8019.ndi]
+AddReg=rtl8019.ndi.reg,rtlrtn.ndi.reg,Clone.params.reg,MCASLOT.params.reg
+LogConfig=*rtl8019.LogConfig
+
+;;****************************************************************************
+;;    *RTL8019   Realtek RTL8019
+;;****************************************************************************
+
+[rtl8019.ndi.reg]
+HKR,Ndi,DeviceID,0,"*RTL8019"
+HKR,Ndi\params\slotnumber,flag,1,10,00,00,00
+
+[*rtl8019.LogConfig]
+IRQConfig=3,4,5,7,9,10,11,12,15
+IOConfig=20@200-3FF%FFE0(3FF::)
+
+;;****************************************************************************
+;;
+;;****************************************************************************
+
+[rtlrtn.ndi.reg]
+; key,subkey,valuname,type,value
+HKR,,DriverDesc,0,"Realtek RTL8019 ISA PnP Ethernet Controller"
+HKR,,DevLoader,0,*ndis
+HKR,,DeviceVxDs,0,pnpnt.sys
+HKR,,EnumPropPages,0,netdi.dll,EnumPropPages
+
+; NDIS Info
+HKR,NDIS,MajorNdisVersion,1,03
+HKR,NDIS,MinorNdisVersion,1,0a
+HKR,NDIS,LogDriverName,0,"PNPNT"
+HKR,NDIS\NDIS2,DriverName,0,"PNPND$"
+HKR,NDIS\NDIS2,FileName,0,"pnpnd.dos"
+HKR,NDIS\ODI,DriverName,0,"pnpodi"
+HKR,NDIS\ODI,FileName,0,"pnpodi.com"
+
+; Interfaces
+HKR,Ndi\Interfaces,DefLower,0,"ethernet"
+HKR,Ndi\Interfaces,LowerRange,0,"ethernet"
+HKR,Ndi\Interfaces,DefUpper,0,"ndis2,ndis3"
+HKR,Ndi\Interfaces,UpperRange,0,"ndis2,ndis3,odi"
+
+; Install sections
+HKR,Ndi\Install,ndis3,0,"rtlrtn.ndis3"
+HKR,Ndi\Install,ndis2,0,rtlrtn.ndis2
+HKR,Ndi\Install,odi,0,rtlrtn.odi
+
+; extra params for ne2000
+[NE2000.params.reg]
+; Resources
+HKR,,InterruptNumber,1,04,00,00,00
+HKR,,IOBaseAddress,1,02,00,00,00
+HKR,NDI\params\InterruptNumber,resc,1,04,00,00,00
+HKR,Ndi\params\interruptNumber,ParamDesc,,"Interrupt Level"
+HKR,NDI\params\InterruptNumber,flag,1,20,00,00,00
+HKR,NDI\params\IOBaseAddress,resc,1,02,00,00,00
+HKR,NDI\params\IOBaseAddress,ParamDesc,,"I/O Base Address"
+HKR,NDI\params\IOBaseAddress,flag,1,20,00,00,00
+
+;ndis2
+HKR,NDI\params\Interrupt,resc,1,04,00,00,00
+HKR,Ndi\params\interrupt,ParamDesc,,"Interrupt Level"
+HKR,NDI\params\Interrupt,flag,1,10,00,00,00
+HKR,NDI\params\IOBase,resc,1,02,00,00,00
+HKR,NDI\params\IOBase,ParamDesc,,"I/O Base Address"
+HKR,NDI\params\IOBase,flag,1,10,00,00,00
+
+; extra params for clones
+[Clone.params.reg]
+; Resources
+HKR,,InterruptNumber,1,04,00,00,00
+HKR,,IOBaseAddress,1,02,00,00,00
+HKR,NDI\params\InterruptNumber,resc,1,04,00,00,00
+HKR,Ndi\params\interruptNumber,ParamDesc,,"Interrupt Level"
+HKR,NDI\params\InterruptNumber,flag,1,20,00,00,00
+HKR,NDI\params\IOBaseAddress,resc,1,02,00,00,00
+HKR,NDI\params\IOBaseAddress,ParamDesc,,"I/O Base Address"
+HKR,NDI\params\IOBaseAddress,flag,1,20,00,00,00
+
+;ndis2
+HKR,NDI\params\Interrupt,resc,1,04,00,00,00
+HKR,Ndi\params\interrupt,ParamDesc,,"Interrupt Level"
+HKR,NDI\params\Interrupt,flag,1,10,00,00,00
+HKR,NDI\params\IOBase,resc,1,02,00,00,00
+HKR,NDI\params\IOBase,ParamDesc,,"I/O Base Address"
+HKR,NDI\params\IOBase,flag,1,10,00,00,00
+
+; base mca slot section
+[MCASLOT.params.reg]
+; Adapter Slot Number
+HKR,Ndi\params\slotnumber,ParamDesc,,"Adapter Slot Number"
+HKR,Ndi\params\slotnumber,type,,int
+HKR,Ndi\params\slotnumber,default,,1
+HKR,Ndi\params\slotnumber,min,,1
+HKR,Ndi\params\slotnumber,max,,8
+HKR,Ndi\params\slotnumber,step,,1
+HKR,Ndi\params\slotnumber,optional,,1
+HKR,Ndi\params\slotnumber,flag,1,10,00,00,00
+
+;;****************************************************************************
+;; Drivers
+;;****************************************************************************
+
+;; Install NDIS3
+[rtlrtn.ndis3]
+;CopyFiles=rtlrtn.ndis3.CopyFiles,rtl8019.inf.CopyFiles,rtl8019.help.CopyFiles
+CopyFiles=rtlrtn.ndis3.CopyFiles,rtl8019.inf.CopyFiles
+DelFiles=rtl8019.DelFiles
+
+[rtlrtn.ndis3.CopyFiles]
+pnpnt.sys,,,2
+
+[rtl8019.inf.CopyFiles]
+netrtn.inf,,,2
+
+;[rtl8019.help.CopyFiles]
+;rtlrtn95.txt,,,2
+
+[rtl8019.DelFiles]
+netrt.inf,,,1
+drvidx.bin,,,1
+drvdata.bin,,,1
+
+;;Install NDIS2
+[rtlrtn.ndis2]
+CopyFiles=rtlrtn.ndis2.CopyFiles
+
+[rtlrtn.ndis2.CopyFiles]
+pnpnd.dos,,,2
+
+;;Install ODI
+[rtlrtn.odi]
+CopyFiles=rtlrtn.odi.CopyFiles
+
+[rtlrtn.odi.CopyFiles]
+pnpodi.com,,,2
+
+;;****************************************************************************
+;; Destination Directories
+;;****************************************************************************
+[DestinationDirs]
+DefaultDestDir              =11 ; LDID_SYS
+rtlrtn.ndis3.CopyFiles      =11
+rtlrtn.ndis2.CopyFiles      =26 ; LDID_WINBOOT
+rtlrtn.odi.CopyFiles        =26
+rtl8019.inf.CopyFiles       =17 ; INF
+rtl8019.DelFiles            =17
+;rtl8019.help.CopyFiles     =?? ; Help file
+
+;;****************************************************************************
+;; Localizable Strings
+;;****************************************************************************
+[strings]
+;;Provider
+V_MS="Microsoft"
+
+;;Manufacturers
+V_Realtek="Realtek"
+
+;;PCI Realtek Devices
+rtl8019.DeviceDesc="Realtek RTL8019 ISA PnP Ethernet"
