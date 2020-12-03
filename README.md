@@ -17,6 +17,18 @@ In this mode, all parameters can be configured via the RSET8019.EXE dos utility 
 - PNP mode (no jumpers set)  
 For modern computers and operating systems like Windows 9x or Linux, this mode is ideal. Resource management will be done by the BIOS or OS.
 
-#### Details, Drivers, Usage follow. 
+### Details
+[Rev. A - Schematic](PCB/gerbers/RevA/ISA8019.pdf)  
+[Rev. A - Interactive BOM](https://tbspace.de/content/downloads/isa8019_ibom.html)  
+[Rev. A - Gerbers & Production files](PCB/gerbers/RevA/ISA8019/ISA8019.zip)  
+
+### Drivers
+[Official Realtek drivers, Windows 3.11, 9x, NT](https://github.com/Manawyrm/ISA8019/tree/master/Drivers/Official%20Realtek%20drivers)  
+[MS-DOS packet drivers, for 16-bit machines](Drivers/Crynwr%20packet%20driver%20-%2016bit%20ISA)  
+[MS-DOS packet drivers, modded for 8-bit XT machines](Drivers/Crynwr%20packet%20driver%20-%20modified%20for%208bit%20operation)  
+
+### Programming utilities
+[RSET8019.EXE](Programming%20utilities/Rset8019.exe) for DOS, can set EEPROM parameters, also includes diagnostic functions  
+[pg8019](Programming%20utilities/pg8019) for DOS, can initialize EEPROM, set MAC address, vendor/product IDs  
 
 [https://tbspace.de](https://tbspace.de)
