@@ -32,4 +32,8 @@ For modern computers and operating systems like Windows 9x or Linux, this mode i
 [RSET8019.EXE](Programming%20utilities/Rset8019.exe) for DOS, can set EEPROM parameters, also includes diagnostic functions  
 [pg8019](Programming%20utilities/pg8019) for DOS, can initialize EEPROM, set MAC address, vendor/product IDs  
 
+### Errata
+Rev.A - Soldermask over ISA slot
+
 [https://tbspace.de](https://tbspace.de)
+
