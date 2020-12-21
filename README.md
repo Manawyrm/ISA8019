@@ -7,7 +7,7 @@ The design is optimized for automated assembly at [JLCPCB](https://jlcpcb.com).
 <img src="https://screenshot.tbspace.de/kglbnxhatcu.jpg" width="45%"> <img src="https://screenshot.tbspace.de/qamutegdkjz.jpg" width="45%">
 
 
-Only the RJ45 jack, jumper headers and the DIP-28 socket for the Boot ROM have to be soldered. 
+Only the RJ45 jack, jumper headers and the DIP-32 socket for the Boot ROM have to be soldered. 
 Jumpers and Boot ROM are optional, the card can be used without any jumpers configured. 
 
 Configuration can be done in 3 modes: 
