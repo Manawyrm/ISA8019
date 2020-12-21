@@ -2,7 +2,7 @@
 ISA8019 is a modern, open-source hardware design for an ISA-bus network card.
 It uses an RTL8019 chipset and is NE2000-compatible, which makes it easy to use with just about any operating system or software available. 
 
-The design is optimized for automated assembly at jlcpcb.com. 
+The design is optimized for automated assembly at [JLCPCB](https://jlcpcb.com). 
 
 <img src="https://screenshot.tbspace.de/kglbnxhatcu.jpg" width="45%"> <img src="https://screenshot.tbspace.de/qamutegdkjz.jpg" width="45%">
 
